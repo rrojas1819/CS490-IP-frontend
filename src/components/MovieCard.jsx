@@ -10,7 +10,9 @@ function MovieCard({ movie }) {
         </div>
   
         <div className="movieCard__body">
-          <h4 className="movieCard__title">{movie.title}</h4>
+          <h4 className="movieCard__title">
+            {movie.title.length > 40  ? `${movie.title.substring(0, 40)}...` : movie.title}
+          </h4>
           <span className="movieCard__kebab" aria-hidden="true" />
         </div>
       </div>

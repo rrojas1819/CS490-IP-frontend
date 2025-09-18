@@ -1,33 +1,15 @@
 import { useState } from 'react'
 import MovieCard from './MovieCard'
 import '../styles/MovieSearch.css'
+import { testData } from '../test.js'
 
 function MovieSearch() {
   const [displayedMovies, setDisplayedMovies] = useState(15)
-  const [searchQuery, setSearchQuery] = useState('') 
+  const [searchQuery, setSearchQuery] = useState('')
+  const [filterType, setFilterType] = useState('movie')
+  const [filterValue, setFilterValue] = useState('') 
   
-  const allMovies = [
-    { title: 'Movie 1', imageUrl: 'https://via.placeholder.com/150' },
-    { title: 'Movie 2', imageUrl: 'https://via.placeholder.com/150' },
-    { title: 'Movie 3', imageUrl: 'https://via.placeholder.com/150' },
-    { title: 'Movie 4', imageUrl: 'https://via.placeholder.com/150' },
-    { title: 'Movie 5', imageUrl: 'https://via.placeholder.com/150' },
-    { title: 'Movie 6', imageUrl: 'https://via.placeholder.com/150' },
-    { title: 'Movie 7', imageUrl: 'https://via.placeholder.com/150' },
-    { title: 'Movie 8', imageUrl: 'https://via.placeholder.com/150' },
-    { title: 'Movie 9', imageUrl: 'https://via.placeholder.com/150' },
-    { title: 'Movie 10', imageUrl: 'https://via.placeholder.com/150' },
-    { title: 'Movie 11', imageUrl: 'https://via.placeholder.com/150' },
-    { title: 'Movie 12', imageUrl: 'https://via.placeholder.com/150' },
-    { title: 'Movie 13', imageUrl: 'https://via.placeholder.com/150' },
-    { title: 'Movie 14', imageUrl: 'https://via.placeholder.com/150' },
-    { title: 'Movie 15', imageUrl: 'https://via.placeholder.com/150' },
-    { title: 'Movie 16', imageUrl: 'https://via.placeholder.com/150' },
-    { title: 'Movie 17', imageUrl: 'https://via.placeholder.com/150' },
-    { title: 'Movie 18', imageUrl: 'https://via.placeholder.com/150' },
-    { title: 'Movie 19', imageUrl: 'https://via.placeholder.com/150' },
-    { title: 'Movie 20', imageUrl: 'https://via.placeholder.com/150' },
-  ]
+  const allMovies = testData.allMovies
 
   const handleMoreClick = () => {
     setDisplayedMovies(prev => Math.min(prev + 10, allMovies.length))
@@ -37,9 +19,27 @@ function MovieSearch() {
     setSearchQuery(e.target.value)
   }
 
-  const filteredMovies = allMovies.filter(movie => 
-    movie.title.toLowerCase().includes(searchQuery.toLowerCase())
-  )
+  const handleFilterTypeChange = (e) => {
+    setFilterType(e.target.value)
+    setSearchQuery('')
+  }
+
+  const filteredMovies = allMovies.filter(movie => {
+    if (searchQuery) {
+      switch (filterType) {
+        case 'actor':
+          return movie.actors.some(actor => 
+            actor.toLowerCase().includes(searchQuery.toLowerCase())
+          )
+        case 'genre':
+          return movie.genre.toLowerCase().includes(searchQuery.toLowerCase())
+        default:
+          return movie.title.toLowerCase().includes(searchQuery.toLowerCase())
+      }
+    }
+    
+    return true
+  })
 
   const visibleMovies = searchQuery ? filteredMovies : allMovies.slice(0, displayedMovies)
 
@@ -47,14 +47,25 @@ function MovieSearch() {
     <div className="movieSearchContainer">
       <h1 className="movieSearchTitle">Movie Search</h1>
       
-      <div className="searchInputContainer">
-        <input
-          type="text"
-          placeholder="Search for movies..."
-          value={searchQuery}
-          onChange={handleSearchChange}
-          className="searchInput"
-        />
+      <div className="searchContainer">
+        <div className="searchInputContainer">
+          <input
+            type="text"
+            placeholder={`Search by ${filterType === 'actor' ? 'actor name' : filterType === 'genre' ? 'genre' : 'movie title'}...`}
+            value={searchQuery}
+            onChange={handleSearchChange}
+            className="searchInput"
+          />
+          <select
+            value={filterType}
+            onChange={handleFilterTypeChange}
+            className="searchTypeSelect"
+          >
+            <option value="movie">Movie Title</option>
+            <option value="actor">Actor</option>
+            <option value="genre">Genre</option>
+          </select>
+        </div>
       </div>
       
       <div className="movieSearchBox">

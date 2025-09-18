@@ -4,16 +4,12 @@ import MovieSearch from './components/MovieSearch'
 import './styles/App.css'
 import MovieCard from './components/MovieCard'
 import './styles/Selection.css'
+import { testData } from './test.js'
 
 function App() {
   const [activeTab, setActiveTab] = useState('Home')
   
-  const categories = ['Long', 'Short', 'Rated One'] //Examples
-  const movies = [
-    { title: 'Movie 1', imageUrl: 'https://via.placeholder.com/150' },
-    { title: 'Movie 2', imageUrl: 'https://via.placeholder.com/150' },
-    { title: 'Movie 3', imageUrl: 'https://via.placeholder.com/150' },
-  ]
+  const { topRentedMovie, categories } = testData
 
   const handleTabClick = (tabName) => {
     setActiveTab(tabName)
@@ -25,18 +21,19 @@ function App() {
       
       {activeTab === 'Home' && (
         <>
-          <div className='movieCardRatedOneContainer'>
-            <div className='movieCardContainerRatedOne'>
-              <MovieCard movie={"Number one rated Movie!"} />
+          <div className='movieCardRentedOneContainer'>
+            <h1 className='topRentedTitle'>Top Rented Movie</h1>
+            <div className='movieCardContainerRentedOne'>
+              <MovieCard movie={topRentedMovie} />
             </div>
           </div>
           
           {categories.map((category, index) => (
             <div className='selectionContainer' key={index}>
-              <h1 className='movieCardCategory'>{category}</h1>
+              <h1 className='movieCardCategory'>{category.name}</h1>
               <div className='movieCardContainer'>
-                {movies.map((movie, index) => (
-                  <MovieCard movie={movie} key={index} />
+                {category.movies.map((movie, movieIndex) => (
+                  <MovieCard movie={movie} key={movieIndex} />
                 ))}
               </div>
             </div>
