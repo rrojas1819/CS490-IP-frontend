@@ -1,5 +1,16 @@
-#root {
-  text-align: center;
+html, body, #root {
+  height: 100%;
+  margin: 0;
 }
 
+#root {
+  display: flex;
+  flex-direction: column;
+}
 
+.headerContainer {
+  flex: 0 0 auto;
+}
+
+.selectionContainer { width: 100%; }
+.movieCardContainer { width: 100%; }

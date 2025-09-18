@@ -1,0 +1,66 @@
+.movieCard{
+    width: 140px;
+    height: 200px;
+    flex: 0 0 140px;  
+  
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.15);
+    
+  }
+  
+  .movieCard__media{
+    height: 68%;                
+    background: #b697ef;         
+    position: relative;
+  }
+  .movieCard__img{
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;          
+  }
+  
+  .movieCard__body{
+    flex: 1 1 auto;
+    background: #fff;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 8px;
+  }
+  
+  .movieCard__title{
+    margin: 0;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.1;
+    color: #1f1f1f;
+    max-width: 92px;             
+    word-break: break-word;
+  }
+  
+  .movieCard__kebab{
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    position: relative;
+  }
+  .movieCard__kebab::after{
+    content: "⋮";
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-size: 16px;
+    line-height: 16px;
+    color: #6f6f6f;
+  }
+  
+  .movieCard:hover{
+    box-shadow: 0 4px 10px rgba(0,0,0,.18);
+  }
+  

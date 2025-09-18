@@ -1,0 +1,53 @@
+/* Selection Container that has the category and the movie card block */
+.selectionContainer{
+    width: 100%;
+    padding: 8px 0;
+    display: flex;
+    flex-direction: column;
+  }
+  
+/* Movie Card Block that has all the cards! */
+  .movieCardContainer{
+    width: 100%;
+    min-height: 180px;
+    padding: 12px 14px;
+  
+    background: #4a4242;       
+  
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;         
+    align-items: flex-end;
+    gap: 24px;
+  
+    overflow-x: auto;
+    overflow-y: hidden;
+    margin-top: 0px;
+  }
+  
+  /* Movie Card Category that has the category name */
+  .movieCardCategory{
+    display: inline-block;  
+    align-self: flex-start; 
+  
+    padding: 6px 10px;      
+    line-height: 1;
+    font-size: 18px;       
+    font-weight: 600;
+    color: #222;
+  
+    background: linear-gradient(#efefef, #e3e3e3);
+    border: 1px solid rgba(0,0,0,0.08);
+    border-top-left-radius: 10px; 
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.7);
+  
+    user-select: none;
+    pointer-events: none;  
+    margin-bottom: 0px;
+  }
+ 
+
+  
