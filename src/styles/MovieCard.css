@@ -1,7 +1,6 @@
 .movieCard{
     width: 140px;
     height: 200px;
-    flex: 0 0 140px;  
   
     display: flex;
     flex-direction: column;
@@ -61,6 +60,6 @@
   }
   
   .movieCard:hover{
-    box-shadow: 0 4px 10px rgba(0,0,0,.18);
+    box-shadow: 0 4px 5px rgba(163, 157, 157, 0.959);
   }
   
