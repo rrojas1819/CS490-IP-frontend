@@ -1,6 +1,8 @@
 html, body, #root {
   height: 100%;
   margin: 0;
+  background: linear-gradient(135deg, #0C1420 0%, #09101A 100%);
+  background-attachment: fixed;
 }
 
 #root {
@@ -14,3 +16,65 @@ html, body, #root {
 
 .selectionContainer { width: 100%; }
 .movieCardContainer { width: 100%; }
+
+/* Customer Info Lighting Effects */
+.customer-info-text {
+  color: #E8F7F4;
+  text-shadow: 
+    0 0 6px rgba(127, 245, 209, 0.35),
+    0 0 12px rgba(127, 245, 209, 0.2);
+  font-weight: 500;
+  animation: customerGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes customerGlow {
+  from {
+    text-shadow: 
+      0 0 6px rgba(127, 245, 209, 0.35),
+      0 0 12px rgba(127, 245, 209, 0.2);
+  }
+  to {
+    text-shadow: 
+      0 0 8px rgba(93, 237, 194, 0.45),
+      0 0 14px rgba(93, 237, 194, 0.3);
+  }
+}
+
+.customer-info-highlight {
+  color: #7FF5D1;
+  text-shadow: 
+    0 0 8px rgba(93, 237, 194, 0.6),
+    0 0 16px rgba(93, 237, 194, 0.35);
+  font-weight: 600;
+}
+
+/* Fix any black text in dark theme */
+* {
+  color: inherit;
+}
+
+body, p, div, span, h1, h2, h3, h4, h5, h6, li, td, th, label, input, textarea, select {
+  color: #E8F7F4;
+}
+
+/* Ensure customer info content is readable */
+.customer-info-content {
+  color: #AED7CB !important;
+}
+
+.customer-info-content p,
+.customer-info-content div,
+.customer-info-content span,
+.customer-info-content h1,
+.customer-info-content h2,
+.customer-info-content h3,
+.customer-info-content h4,
+.customer-info-content h5,
+.customer-info-content h6 {
+  color: #AED7CB !important;
+}
+
+/* Override any black text specifically */
+.black-text-fix {
+  color: #AED7CB !important;
+}

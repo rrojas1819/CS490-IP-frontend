@@ -7,6 +7,15 @@ export const testData = {
     genre: 'Crime, Drama'
   },
 
+  // Top 5 rented movies from hypothetical SQL query
+  top5RentedMovies: [
+    { title: 'The Godfather', imageUrl: 'https://via.placeholder.com/300x450/2c3e50/ffffff?text=The+Godfather', rentings: 1250000, year: 1972, genre: 'Crime, Drama' },
+    { title: 'The Shawshank Redemption', imageUrl: 'https://via.placeholder.com/300x450/34495e/ffffff?text=Shawshank', rentings: 930000, year: 1994, genre: 'Drama' },
+    { title: 'The Dark Knight', imageUrl: 'https://via.placeholder.com/300x450/7f8c8d/ffffff?text=Dark+Knight', rentings: 900000, year: 2008, genre: 'Action' },
+    { title: 'Pulp Fiction', imageUrl: 'https://via.placeholder.com/300x450/95a5a6/ffffff?text=Pulp+Fiction', rentings: 890000, year: 1994, genre: 'Crime' },
+    { title: 'The Lord of the Rings: The Return of the King', imageUrl: 'https://via.placeholder.com/300x450/8e44ad/ffffff?text=LOTR', rentings: 890000, year: 2003, genre: 'Fantasy' }
+  ],
+
   categories: [
     {
       name: 'Long',

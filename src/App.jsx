@@ -9,7 +9,7 @@ import { testData } from './test.js'
 function App() {
   const [activeTab, setActiveTab] = useState('Home')
   
-  const { topRentedMovie, categories } = testData
+  const { topRentedMovie, categories, allMovies, top5RentedMovies } = testData
 
   const handleTabClick = (tabName) => {
     setActiveTab(tabName)
@@ -21,10 +21,15 @@ function App() {
       
       {activeTab === 'Home' && (
         <>
-          <div className='movieCardRentedOneContainer'>
-            <h1 className='topRentedTitle'>Top Rented Movie</h1>
-            <div className='movieCardContainerRentedOne'>
-              <MovieCard movie={topRentedMovie} />
+          <div className='top5Container'>
+            <h1 className='topRentedTitle'>Top 5 Rented Movies</h1>
+            <div className='movieCardContainerTop5'>
+              {top5RentedMovies.map((movie, index) => (
+                <div key={movie.title} className='top5MovieItem'>
+                  <MovieCard movie={movie} />
+                  <div className='rankNumber'>{index + 1}</div>
+                </div>
+              ))}
             </div>
           </div>
           

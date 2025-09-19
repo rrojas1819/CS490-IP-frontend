@@ -12,7 +12,11 @@
     min-height: 180px;
     padding: 12px 14px;
   
-    background: #4a4242;       
+    background: rgba(22, 48, 72, 0.75);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(31, 66, 100, 0.35);
+    border-radius: 12px;
+    box-shadow: 0 6px 22px rgba(0,0,0,0.35);
   
     display: flex;
     flex-direction: row;
@@ -34,63 +38,115 @@
     line-height: 1;
     font-size: 18px;       
     font-weight: 600;
-    color: #222;
+    color: #E8F7F4;
   
-    background: linear-gradient(#efefef, #e3e3e3);
-    border: 1px solid rgba(0,0,0,0.08);
+    background: linear-gradient(135deg, #163048 0%, #1F4264 100%);
+    border: 2px solid #1F4264;
     border-top-left-radius: 10px; 
     border-top-right-radius: 10px;
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.7);
+    box-shadow: 0 2px 6px rgba(12, 20, 32, 0.5);
   
     user-select: none;
     pointer-events: none;  
     margin-bottom: 0px;
   }
 
-/* Top Rented Movie Container */
-.movieCardRentedOneContainer {
+/* Top 5 Movies Container */
+.top5Container {
   width: 100%;
   padding: 20px 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #0C1420 0%, #09101A 100%);
   margin-bottom: 20px;
-  border-radius: 12px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 32px rgba(12, 20, 32, 0.6);
 }
 
 .topRentedTitle {
   font-size: 2.5rem;
   font-weight: bold;
-  color: white;
+  color: #E8F7F4;
   margin-bottom: 20px;
   text-align: center;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
   letter-spacing: 1px;
 }
 
-.movieCardContainerRentedOne {
+
+/* Top 5 Movies Container */
+.movieCardContainerTop5 {
   display: flex;
+  flex-direction: row;
   justify-content: center;
-  align-items: center;
-  padding: 20px;
-  background: rgba(255, 255, 255, 0.1);
+  align-items: flex-start;
+  padding-top: 35px;
+  padding-bottom: 35px;
+
+  background: rgba(22, 48, 72, 0.6);
   border-radius: 12px;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(31, 66, 100, 0.35);
+  box-shadow: 0 4px 18px rgba(0,0,0,0.35);
+  width: 100%;
+  max-width: 1200px;
+  overflow-x: auto;
+  gap: 30px;
 }
 
-.movieCardContainerRentedOne .movieCard {
+.top5MovieItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.3s ease;
+  flex: 0 0 auto;
+  max-width: 150px;
+  justify-content: flex-start;
+}
+
+.top5MovieItem .movieCard {
+  order: 1;
+}
+
+.top5MovieItem .rankNumber {
+  order: 2;
+  margin-top: 10px;
+}
+
+.top5MovieItem:hover {
+  transform: translateY(-5px);
+}
+
+/* Make the first movie (rank 1) bigger */
+.top5MovieItem:first-child .movieCard {
   transform: scale(1.1);
-  transition: transform 0.3s ease;
 }
 
-.movieCardContainerRentedOne .movieCard:hover {
+.top5MovieItem:first-child:hover .movieCard {
   transform: scale(1.15);
+}
+
+.rankNumber {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #0C1420;
+  background: linear-gradient(135deg, #7FF5D1, #5DEDC2);
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(127, 245, 209, 0.45);
+  flex-shrink: 0;
+}
+
+.top5MovieItem .movieCard {
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
 }
 
  

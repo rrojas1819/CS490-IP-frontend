@@ -17,8 +17,8 @@
     padding: 8px 0;
   }
   
-  .aboutCorner:hover{     color: #da4343;  }
-  .aboutCorner.active{ color: #e53935; } 
+  .aboutCorner:hover{     color: #7FF5D1;  }
+  .aboutCorner.active{ color: #5DEDC2; } 
 
   .tabTitle{
     position: relative;
@@ -30,16 +30,24 @@
     font-size: 17px;
     font-weight: 600;
     letter-spacing: .08em;
-    color: #202020;
+    color: #AED7CB;
     text-decoration: none;
     cursor: pointer;
+    transition: all 0.3s ease;
   }
   
   .tabTitle.active{
-    color: #e53935;            
+    color: #0C1420;
+    font-weight: 700;
+    background: linear-gradient(135deg, #7FF5D1 0%, #5DEDC2 100%);
+    padding: 8px 16px;
+    border-radius: 8px;
+    box-shadow: 0 4px 14px rgba(127, 245, 209, 0.35);
+    border: 1px solid #7FF5D1;
   }
   .tabTitle:hover{
-    color: #da4343;
+    color: #E8F7F4;
+    transform: translateY(-2px);
   }
   
 

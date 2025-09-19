@@ -6,15 +6,18 @@
     flex-direction: column;
     overflow: hidden;
   
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0,0,0,.15);
+    background: rgba(22, 48, 72, 0.85);
+    backdrop-filter: blur(8px);
+    border-radius: 12px;
+    box-shadow: 0 6px 22px rgba(0,0,0,0.35);
+    border: 1px solid rgba(31, 66, 100, 0.35);
+    transition: all 0.3s ease;
     
   }
   
   .movieCard__media{
     height: 68%;                
-    background: #b697ef;         
+    background: linear-gradient(135deg, #163048 0%, #1F4264 100%);         
     position: relative;
   }
   .movieCard__img{
@@ -26,7 +29,7 @@
   
   .movieCard__body{
     flex: 1 1 auto;
-    background: #fff;
+    background: rgba(31, 66, 100, 0.9);
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
@@ -38,7 +41,7 @@
     font-size: 13px;
     font-weight: 700;
     line-height: 1.1;
-    color: #1f1f1f;
+    color: #E8F7F4;
     max-width: 92px;             
     word-break: break-word;
   }
@@ -56,10 +59,12 @@
     top: 0;
     font-size: 16px;
     line-height: 16px;
-    color: #6f6f6f;
+    color: #AED7CB;
   }
   
   .movieCard:hover{
-    box-shadow: 0 4px 5px rgba(163, 157, 157, 0.959);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 28px rgba(12, 20, 32, 0.55);
+    border-color: #7FF5D1;
   }
   

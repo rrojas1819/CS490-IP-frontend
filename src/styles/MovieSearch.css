@@ -8,9 +8,10 @@
 .movieSearchTitle {
   font-size: 2rem;
   font-weight: bold;
-  color: #333;
+  color: #E8F7F4;
   margin-bottom: 20px;
   text-align: center;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .searchContainer {
@@ -29,37 +30,43 @@
   flex: 1;
   padding: 12px 16px;
   font-size: 1rem;
-  border: 2px solid #ddd;
-  border-radius: 8px;
+  border: 2px solid rgba(22, 48, 72, 0.5);
+  border-radius: 12px;
   outline: none;
-  transition: border-color 0.2s;
+  transition: all 0.3s ease;
+  background: rgba(15, 28, 42, 0.85);
+  color: #E8F7F4;
+  backdrop-filter: blur(10px);
 }
 
 .searchInput:focus {
-  border-color: #007bff;
-  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+  border-color: #7FF5D1;
+  box-shadow: 0 0 0 3px rgba(127, 245, 209, 0.25);
 }
 
 .searchTypeSelect {
   padding: 12px 16px;
-  border: 2px solid #ddd;
-  border-radius: 8px;
-  background-color: white;
+  border: 2px solid rgba(22, 48, 72, 0.5);
+  border-radius: 12px;
+  background: rgba(15, 28, 42, 0.85);
+  color: #E8F7F4;
   font-size: 1rem;
   outline: none;
-  transition: border-color 0.2s;
+  transition: all 0.3s ease;
   cursor: pointer;
   min-width: 120px;
+  backdrop-filter: blur(10px);
 }
 
 .searchTypeSelect:focus {
-  border-color: #007bff;
-  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+  border-color: #7FF5D1;
+  box-shadow: 0 0 0 3px rgba(127, 245, 209, 0.25);
 }
 
 .movieSearchBox {
-  background-color: #f5f5f5;
-  border-radius: 8px;
+  background: rgba(15, 28, 42, 0.7);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
   padding: 20px;
   padding-top: 40px;
   width: 100%;
@@ -67,6 +74,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  border: 1px solid rgba(12, 20, 32, 0.6);
+  box-shadow: 0 8px 32px rgba(12, 20, 32, 0.6);
 }
 
 .movieGrid {
@@ -89,22 +98,25 @@
 }
 
 .moreButton {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 6px;
+  background: linear-gradient(135deg, #7FF5D1 0%, #5DEDC2 100%);
+  color: #0C1420;
+  border: 1px solid #7FF5D1;
+  border-radius: 12px;
   padding: 12px 24px;
   font-size: 1rem;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(127, 245, 209, 0.35);
 }
 
 .moreButton:hover {
-  background-color: #0056b3;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(127, 245, 209, 0.45);
 }
 
 .moreButton:active {
-  background-color: #004085;
+  transform: translateY(0);
+  box-shadow: 0 2px 10px rgba(127, 245, 209, 0.35);
 }
 
