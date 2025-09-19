@@ -12,6 +12,7 @@
     box-shadow: 0 6px 22px rgba(0,0,0,0.35);
     border: 1px solid rgba(31, 66, 100, 0.35);
     transition: all 0.3s ease;
+    cursor: pointer;
     
   }
   

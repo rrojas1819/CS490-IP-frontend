@@ -43,7 +43,52 @@ export const testData = {
         { title: 'The Dark Knight', imageUrl: 'https://via.placeholder.com/150/7f8c8d/ffffff?text=Dark+Knight', rentings: 900000, year: 2008, duration: '152 min' },
         { title: 'Pulp Fiction', imageUrl: 'https://via.placeholder.com/150/95a5a6/ffffff?text=Pulp+Fiction', rentings: 890000, year: 1994, duration: '154 min' }
       ]
+    },
+    {
+      name: 'Action',
+      movies: [
+        { title: 'The Matrix', imageUrl: 'https://via.placeholder.com/150/2980b9/ffffff?text=Matrix', rentings: 870000, year: 1999, duration: '136 min' },
+        { title: 'Mad Max: Fury Road', imageUrl: 'https://via.placeholder.com/150/e67e22/ffffff?text=Mad+Max', rentings: 750000, year: 2015, duration: '120 min' },
+        { title: 'John Wick', imageUrl: 'https://via.placeholder.com/150/16a085/ffffff?text=John+Wick', rentings: 720000, year: 2014, duration: '101 min' },
+        { title: 'Mission: Impossible', imageUrl: 'https://via.placeholder.com/150/d35400/ffffff?text=Mission', rentings: 710000, year: 1996, duration: '110 min' }
+      ]
+    },
+    {
+      name: 'Comedy',
+      movies: [
+        { title: 'The Hangover', imageUrl: 'https://via.placeholder.com/150/f39c12/ffffff?text=Hangover', rentings: 680000, year: 2009, duration: '100 min' },
+        { title: 'Superbad', imageUrl: 'https://via.placeholder.com/150/9b59b6/ffffff?text=Superbad', rentings: 650000, year: 2007, duration: '113 min' },
+        { title: 'Anchorman', imageUrl: 'https://via.placeholder.com/150/1abc9c/ffffff?text=Anchorman', rentings: 620000, year: 2004, duration: '94 min' },
+        { title: 'Step Brothers', imageUrl: 'https://via.placeholder.com/150/e74c3c/ffffff?text=Step+Brothers', rentings: 600000, year: 2008, duration: '98 min' }
+      ]
+    },
+    {
+      name: 'Horror',
+      movies: [
+        { title: 'The Exorcist', imageUrl: 'https://via.placeholder.com/150/8e44ad/ffffff?text=Exorcist', rentings: 580000, year: 1973, duration: '122 min' },
+        { title: 'Halloween', imageUrl: 'https://via.placeholder.com/150/27ae60/ffffff?text=Halloween', rentings: 560000, year: 1978, duration: '91 min' },
+        { title: 'A Nightmare on Elm Street', imageUrl: 'https://via.placeholder.com/150/2c3e50/ffffff?text=Elm+Street', rentings: 540000, year: 1984, duration: '91 min' },
+        { title: 'The Conjuring', imageUrl: 'https://via.placeholder.com/150/34495e/ffffff?text=Conjuring', rentings: 520000, year: 2013, duration: '112 min' }
+      ]
+    },
+    {
+      name: 'Sci-Fi',
+      movies: [
+        { title: 'Blade Runner', imageUrl: 'https://via.placeholder.com/150/7f8c8d/ffffff?text=Blade+Runner', rentings: 500000, year: 1982, duration: '117 min' },
+        { title: 'Alien', imageUrl: 'https://via.placeholder.com/150/95a5a6/ffffff?text=Alien', rentings: 480000, year: 1979, duration: '117 min' },
+        { title: 'The Terminator', imageUrl: 'https://via.placeholder.com/150/8e44ad/ffffff?text=Terminator', rentings: 460000, year: 1984, duration: '107 min' },
+        { title: 'Back to the Future', imageUrl: 'https://via.placeholder.com/150/3498db/ffffff?text=Back+Future', rentings: 440000, year: 1985, duration: '116 min' }
+      ]
     }
+  ],
+
+  // Top 5 actors from hypothetical SQL query
+  top5Actors: [
+    { name: 'Tom Hanks', imageUrl: 'https://via.placeholder.com/150/2c3e50/ffffff?text=Tom+Hanks', movieCount: 15, totalRentings: 4200000, mostPopularMovie: 'Forrest Gump' },
+    { name: 'Leonardo DiCaprio', imageUrl: 'https://via.placeholder.com/150/34495e/ffffff?text=Leo', movieCount: 12, totalRentings: 3800000, mostPopularMovie: 'Titanic' },
+    { name: 'Robert De Niro', imageUrl: 'https://via.placeholder.com/150/7f8c8d/ffffff?text=De+Niro', movieCount: 18, totalRentings: 3600000, mostPopularMovie: 'Goodfellas' },
+    { name: 'Morgan Freeman', imageUrl: 'https://via.placeholder.com/150/95a5a6/ffffff?text=Morgan', movieCount: 14, totalRentings: 3400000, mostPopularMovie: 'Shawshank' },
+    { name: 'Al Pacino', imageUrl: 'https://via.placeholder.com/150/8e44ad/ffffff?text=Pacino', movieCount: 16, totalRentings: 3200000, mostPopularMovie: 'The Godfather' }
   ],
 
   allMovies: [
