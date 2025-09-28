@@ -23,9 +23,15 @@ async function apiDefaultRequest(endpoint, options = {}) {
 export const filmAPI = {
   
   getTop5RentedFilms: () => apiDefaultRequest('/films/top5rentedfilms'),
+  getFilmGroupGenre: () => apiDefaultRequest('/films/filmgroupgenre'),
   
 };
 
+export const actorAPI = {
+  
+  getTop5Actors: () => apiDefaultRequest('/actors/top5actors'),
+  
+};
 
 
 

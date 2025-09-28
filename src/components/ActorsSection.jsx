@@ -7,7 +7,7 @@ function ActorsSection({ actors, title = "Top 5 Actors" }) {
       <div className='actorCardContainerTop5'>
         {actors.map((actor, index) => (
           <ActorCard 
-            key={actor.name} 
+            key={actor.actor_id} 
             actor={actor} 
             rank={index + 1}
           />

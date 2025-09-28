@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import MovieCard from './MovieCard'
 import '../styles/MovieSearch.css'
-import { testData } from '../test.js'
 
 function MovieSearch() {
   const [displayedMovies, setDisplayedMovies] = useState(15)
@@ -9,7 +8,7 @@ function MovieSearch() {
   const [filterType, setFilterType] = useState('movie')
   const [filterValue, setFilterValue] = useState('') 
   
-  const allMovies = testData.allMovies
+  const allMovies = []
 
   const handleMoreClick = () => {
     setDisplayedMovies(prev => Math.min(prev + 10, allMovies.length))

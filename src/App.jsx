@@ -5,19 +5,19 @@ import './styles/App.css'
 import MovieCard from './components/MovieCard'
 import './styles/Selection.css'
 import ActorsSection from './components/ActorsSection'
-import { testData } from './test.js'
-import { filmAPI } from './utils/api'
+import { filmAPI, actorAPI } from './utils/api'
 
 function App() {
   const [activeTab, setActiveTab] = useState('Home')
   
   
   const [top5RentedMovies, setTop5RentedMovies] = useState([])
+  const [top5Actors, setTop5Actors] = useState([])
+  const [filmGroupGenre, setFilmGroupGenre] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   
-  // Test Data for other sections for now.
-  const { categories, top5Actors } = testData
+ 
 
   
   useEffect(() => {
@@ -35,6 +35,53 @@ function App() {
       }
     }
     fetchTop5Films()
+  }, [])
+
+  useEffect(() => {
+    const fetchTop5Actors = async () => {
+      try {
+        setLoading(true)
+        const actors = await actorAPI.getTop5Actors()
+        setTop5Actors(actors)
+        setError(null)
+      } catch (err) {
+        console.error('Failed to fetch top 5 actors:', err)
+        setError('Failed to load top 5 actors')
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchTop5Actors()
+  }, [])
+  
+  useEffect(() => {
+    const fetchFilmGroupGenre = async () => {
+      try {
+        setLoading(true)
+        const films = await filmAPI.getFilmGroupGenre()
+        
+        // Group films by genre
+        const groupedFilms = films.reduce((acc, film) => {
+          const genre = film.genre
+          if (!acc[genre]) {
+            acc[genre] = { name: genre, movies: [] }
+          }
+          acc[genre].movies.push(film)
+          return acc
+        }, {})
+        
+        
+        const filmGroupGenre = Object.values(groupedFilms)
+        setFilmGroupGenre(filmGroupGenre)
+        setError(null)
+      } catch (err) {
+        console.error('Failed to fetch film group genre:', err)
+        setError('Failed to load film group genre')
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchFilmGroupGenre()
   }, [])
 
   const handleTabClick = (tabName) => {
@@ -61,11 +108,11 @@ function App() {
             </div>
           </div>
           
-          {categories.map((category, index) => (
+          {filmGroupGenre.length > 0 && filmGroupGenre.map((category, index) => (
             <div className='selectionContainer' key={index}>
               <h1 className='movieCardCategory'>{category.name}</h1>
               <div className='movieCardContainer'>
-                {category.movies.map((movie, movieIndex) => (
+                {category.movies && category.movies.map((movie, movieIndex) => (
                   <MovieCard movie={movie} key={movieIndex} />
                 ))}
               </div>
