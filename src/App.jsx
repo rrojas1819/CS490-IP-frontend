@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Header from './components/Header'
 import MovieSearch from './components/MovieSearch'
 import './styles/App.css'
@@ -6,11 +6,36 @@ import MovieCard from './components/MovieCard'
 import './styles/Selection.css'
 import ActorsSection from './components/ActorsSection'
 import { testData } from './test.js'
+import { filmAPI } from './utils/api'
 
 function App() {
   const [activeTab, setActiveTab] = useState('Home')
   
-  const { topRentedMovie, categories, allMovies, top5RentedMovies, top5Actors } = testData
+  
+  const [top5RentedMovies, setTop5RentedMovies] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
+  
+  // Test Data for other sections for now.
+  const { categories, top5Actors } = testData
+
+  
+  useEffect(() => {
+    const fetchTop5Films = async () => {
+      try {
+        setLoading(true)
+        const films = await filmAPI.getTop5RentedFilms()
+        setTop5RentedMovies(films)
+        setError(null)
+      } catch (err) {
+        console.error('Failed to fetch top 5 films:', err)
+        setError('Failed to load top 5 films')
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchTop5Films()
+  }, [])
 
   const handleTabClick = (tabName) => {
     setActiveTab(tabName)
@@ -24,6 +49,8 @@ function App() {
         <>
           <div className='top5Container'>
             <h1 className='topRentedTitle'>Top 5 Rented Movies</h1>
+            {loading && <p>Loading top 5 films...</p>}
+            {error && <p style={{ color: 'red' }}>{error}</p>}
             <div className='movieCardContainerTop5'>
               {top5RentedMovies.map((movie, index) => (
                 <div key={movie.title} className='top5MovieItem'>
