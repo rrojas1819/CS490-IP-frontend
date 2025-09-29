@@ -13,6 +13,7 @@ function App() {
   const [activeTab, setActiveTab] = useState('Home')
   const [selectedMovie, setSelectedMovie] = useState(null)
   const [selectedActor, setSelectedActor] = useState(null)
+  const [navigationHistory, setNavigationHistory] = useState([])
   
   
   const [top5RentedMovies, setTop5RentedMovies] = useState([])
@@ -88,17 +89,66 @@ function App() {
     fetchFilmGroupGenre()
   }, [])
 
-  const handleTabClick = (tabName) => {
+  const saveCurrentState = () => ({
+    activeTab,
+    selectedMovie,
+    selectedActor
+  })
+
+  const restoreState = (state) => {
+    setActiveTab(state.activeTab)
+    setSelectedMovie(state.selectedMovie)
+    setSelectedActor(state.selectedActor)
+  }
+
+  const clearAllSelections = () => {
     setSelectedMovie(null)
     setSelectedActor(null)
+  }
+
+  const pushToHistory = (state) => {
+    setNavigationHistory(prev => [...prev, state])
+  }
+
+  const goBack = () => {
+    if (navigationHistory.length > 0) {
+      const previousState = navigationHistory[navigationHistory.length - 1]
+      setNavigationHistory(prev => prev.slice(0, -1))
+      restoreState(previousState)
+    } else {
+      clearAllSelections()
+      setActiveTab('Home')
+    }
+  }
+
+  const handleTabClick = (tabName) => {
+    setNavigationHistory([])
+    clearAllSelections()
     setActiveTab(tabName)
   }
 
-  const handleOpenMovie = (movie) => {
-    setSelectedMovie(movie)
+  const handleOpenMovie = async (movie) => {
+    try {
+      setLoading(true)
+      pushToHistory(saveCurrentState())
+      
+      const detailedMovie = await filmAPI.getFilmById(movie.film_id)
+      clearAllSelections()
+      setSelectedMovie(detailedMovie)
+      setError(null)
+    } catch (err) {
+      console.error('Failed to fetch movie details:', err)
+      setError('Failed to load movie details')
+      clearAllSelections()
+      setSelectedMovie(movie)
+    } finally {
+      setLoading(false)
+    }
   }
 
   const handleOpenActor = (actor) => {
+    pushToHistory(saveCurrentState())
+    clearAllSelections()
     setSelectedActor(actor)
   }
 
@@ -140,27 +190,20 @@ function App() {
       )}
 
       {activeTab === 'Home' && selectedMovie && (
-        <MovieScreen
-          movie={selectedMovie}
-          onBack={() => setSelectedMovie(null)}
-          onOpenActor={(actor) => {
-            setSelectedMovie(null)
-            setSelectedActor(actor)
-          }}
-        />
+        <>
+          {loading && <p>Loading movie details...</p>}
+           <MovieScreen
+             movie={selectedMovie}
+             onBack={goBack}
+             onOpenActor={handleOpenActor}
+           />
+        </>
       )}
       {activeTab === 'Home' && selectedActor && (
         <ActorScreen
           actor={selectedActor}
-          onBack={() => setSelectedActor(null)}
-          onOpenMovie={(film) => {
-            setSelectedActor(null)
-            setSelectedMovie({
-              ...film,
-              title: film.title,
-              releaseYear: film.release_year ?? film.releaseYear,
-            })
-          }}
+          onBack={goBack}
+          onOpenMovie={handleOpenMovie}
         />
       )}
       
@@ -168,7 +211,10 @@ function App() {
         <MovieSearch onOpenMovie={handleOpenMovie} />
       )}
       {activeTab === 'Movies' && selectedMovie && (
-        <MovieScreen movie={selectedMovie} onBack={() => setSelectedMovie(null)} />
+        <>
+          {loading && <p>Loading movie details...</p>}
+           <MovieScreen movie={selectedMovie} onBack={goBack} />
+        </>
       )}
 
       {activeTab === 'Customer Info' && <div>Customer Info content coming soon...</div>}

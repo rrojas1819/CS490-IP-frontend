@@ -24,7 +24,7 @@ export const filmAPI = {
   
   getTop5RentedFilms: () => apiDefaultRequest('/films/top5rentedfilms'),
   getFilmGroupGenre: () => apiDefaultRequest('/films/filmgroupgenre'),
-  
+  getFilmById: (filmId) => apiDefaultRequest(`/films/filmdetails?film_id=${filmId}`),
 };
 
 export const actorAPI = {
