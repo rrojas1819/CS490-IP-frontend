@@ -1,6 +1,6 @@
 import ActorCard from './ActorCard'
 
-function ActorsSection({ actors, title = "Top 5 Actors" }) {
+function ActorsSection({ actors, title = "Top 5 Actors", onOpenActor }) {
   return (
     <div className='top5ActorsContainer'>
       <h1 className='topActorsTitle'>{title}</h1>
@@ -10,6 +10,7 @@ function ActorsSection({ actors, title = "Top 5 Actors" }) {
             key={actor.actor_id} 
             actor={actor} 
             rank={index + 1}
+            onOpen={onOpenActor}
           />
         ))}
       </div>

@@ -1,8 +1,8 @@
 import '../styles/MovieScreen.css'
 
-function MovieScreen({ movie, onBack }) {
+function MovieScreen({ movie, onBack, onOpenActor }) {
     if (!movie) return null
-
+/*I should add some symbol or something to showcase the rank number I'll do that later */
     const {
         title,
         imageUrl,
@@ -15,7 +15,7 @@ function MovieScreen({ movie, onBack }) {
     const releaseYear = movie.release_year
     const filmId = movie.film_id
 
-    const actorNames = (actors || []).map((a) => `${a.first_name} ${a.last_name}`)
+    const actorList = Array.isArray(actors) ? actors : []
 
     return (
         <div className="movieScreenContainer">
@@ -56,12 +56,19 @@ function MovieScreen({ movie, onBack }) {
                        
                     </div>
 
-                    {actorNames.length > 0 && (
+                    {actorList.length > 0 && (
                         <div className="movieScreenActorsSection">
                             <h3 className="movieScreenSectionTitle">Actors</h3>
                             <div className="movieScreenActors">
-                                {actorNames.map((name) => (
-                                    <div className="movieScreenActorCard" key={name}>{name}</div>
+                                {actorList.map((a) => (
+                                    <button
+                                        type="button"
+                                        className="movieScreenActorCard"
+                                        key={a.actor_id}
+                                        onClick={() => typeof onOpenActor === 'function' && onOpenActor(a)}
+                                    >
+                                        {a.first_name} {a.last_name}
+                                    </button>
                                 ))}
                             </div>
                         </div>

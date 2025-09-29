@@ -6,11 +6,13 @@ import './styles/App.css'
 import MovieCard from './components/MovieCard'
 import './styles/Selection.css'
 import ActorsSection from './components/ActorsSection'
+import ActorScreen from './components/ActorScreen'
 import { filmAPI, actorAPI } from './utils/api'
 
 function App() {
   const [activeTab, setActiveTab] = useState('Home')
   const [selectedMovie, setSelectedMovie] = useState(null)
+  const [selectedActor, setSelectedActor] = useState(null)
   
   
   const [top5RentedMovies, setTop5RentedMovies] = useState([])
@@ -88,6 +90,7 @@ function App() {
 
   const handleTabClick = (tabName) => {
     setSelectedMovie(null)
+    setSelectedActor(null)
     setActiveTab(tabName)
   }
 
@@ -95,11 +98,15 @@ function App() {
     setSelectedMovie(movie)
   }
 
+  const handleOpenActor = (actor) => {
+    setSelectedActor(actor)
+  }
+
   return (
     <>
       <Header activeTab={activeTab} onTabClick={handleTabClick} />
       
-      {activeTab === 'Home' && !selectedMovie && (
+      {activeTab === 'Home' && !selectedMovie && !selectedActor && (
         <>
           <div className='top5Container'>
             <h1 className='topRentedTitle'>Top 5 Rented Movies</h1>
@@ -125,7 +132,7 @@ function App() {
               </div>
               
               {index === 2 && (
-                <ActorsSection actors={top5Actors} title="Top 5 Actors" />
+                <ActorsSection actors={top5Actors} title="Top 5 Actors" onOpenActor={handleOpenActor} />
               )}
             </div>
           ))}
@@ -133,7 +140,28 @@ function App() {
       )}
 
       {activeTab === 'Home' && selectedMovie && (
-        <MovieScreen movie={selectedMovie} onBack={() => setSelectedMovie(null)} />
+        <MovieScreen
+          movie={selectedMovie}
+          onBack={() => setSelectedMovie(null)}
+          onOpenActor={(actor) => {
+            setSelectedMovie(null)
+            setSelectedActor(actor)
+          }}
+        />
+      )}
+      {activeTab === 'Home' && selectedActor && (
+        <ActorScreen
+          actor={selectedActor}
+          onBack={() => setSelectedActor(null)}
+          onOpenMovie={(film) => {
+            setSelectedActor(null)
+            setSelectedMovie({
+              ...film,
+              title: film.title,
+              releaseYear: film.release_year ?? film.releaseYear,
+            })
+          }}
+        />
       )}
       
       {activeTab === 'Movies' && !selectedMovie && (
@@ -142,6 +170,7 @@ function App() {
       {activeTab === 'Movies' && selectedMovie && (
         <MovieScreen movie={selectedMovie} onBack={() => setSelectedMovie(null)} />
       )}
+
       {activeTab === 'Customer Info' && <div>Customer Info content coming soon...</div>}
     </>
   )
