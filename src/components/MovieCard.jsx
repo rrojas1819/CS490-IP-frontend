@@ -1,8 +1,11 @@
 import '../styles/MovieCard.css'
 
-function MovieCard({ movie }) {
+function MovieCard({ movie, onOpen }) {
+    const handleOpen = () => {
+      if (typeof onOpen === 'function') onOpen(movie)
+    }
     return (
-      <div className="movieCard">
+      <div className="movieCard" onClick={handleOpen} role="button" tabIndex={0} onKeyDown={(e) => { if (e.key === 'Enter') handleOpen() }}>
         <div className="movieCard__media">
           {movie.imageUrl && (
             <img className="movieCard__img" src={movie.imageUrl} alt={movie.title} />

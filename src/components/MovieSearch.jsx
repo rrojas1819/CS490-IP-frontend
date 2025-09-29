@@ -2,7 +2,7 @@ import { useState } from 'react'
 import MovieCard from './MovieCard'
 import '../styles/MovieSearch.css'
 
-function MovieSearch() {
+function MovieSearch({ onOpenMovie }) {
   const [displayedMovies, setDisplayedMovies] = useState(15)
   const [searchQuery, setSearchQuery] = useState('')
   const [filterType, setFilterType] = useState('movie')
@@ -71,7 +71,7 @@ function MovieSearch() {
         <div className="movieGrid">
           {visibleMovies.map((movie, index) => (
             <div className="movieItem" key={index}>
-              <MovieCard movie={movie} />
+              <MovieCard movie={movie} onOpen={onOpenMovie} />
             </div>
           ))}
         </div>

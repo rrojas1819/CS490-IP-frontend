@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import Header from './components/Header'
 import MovieSearch from './components/MovieSearch'
+import MovieScreen from './components/MovieScreen'
 import './styles/App.css'
 import MovieCard from './components/MovieCard'
 import './styles/Selection.css'
@@ -9,6 +10,7 @@ import { filmAPI, actorAPI } from './utils/api'
 
 function App() {
   const [activeTab, setActiveTab] = useState('Home')
+  const [selectedMovie, setSelectedMovie] = useState(null)
   
   
   const [top5RentedMovies, setTop5RentedMovies] = useState([])
@@ -85,14 +87,19 @@ function App() {
   }, [])
 
   const handleTabClick = (tabName) => {
+    setSelectedMovie(null)
     setActiveTab(tabName)
+  }
+
+  const handleOpenMovie = (movie) => {
+    setSelectedMovie(movie)
   }
 
   return (
     <>
       <Header activeTab={activeTab} onTabClick={handleTabClick} />
       
-      {activeTab === 'Home' && (
+      {activeTab === 'Home' && !selectedMovie && (
         <>
           <div className='top5Container'>
             <h1 className='topRentedTitle'>Top 5 Rented Movies</h1>
@@ -101,7 +108,7 @@ function App() {
             <div className='movieCardContainerTop5'>
               {top5RentedMovies.map((movie, index) => (
                 <div key={movie.title} className='top5MovieItem'>
-                  <MovieCard movie={movie} />
+                  <MovieCard movie={movie} onOpen={handleOpenMovie} />
                   <div className='rankNumber'>{index + 1}</div>
                 </div>
               ))}
@@ -113,7 +120,7 @@ function App() {
               <h1 className='movieCardCategory'>{category.name}</h1>
               <div className='movieCardContainer'>
                 {category.movies && category.movies.map((movie, movieIndex) => (
-                  <MovieCard movie={movie} key={movieIndex} />
+                  <MovieCard movie={movie} key={movieIndex} onOpen={handleOpenMovie} />
                 ))}
               </div>
               
@@ -124,8 +131,17 @@ function App() {
           ))}
         </>
       )}
+
+      {activeTab === 'Home' && selectedMovie && (
+        <MovieScreen movie={selectedMovie} onBack={() => setSelectedMovie(null)} />
+      )}
       
-      {activeTab === 'Movies' && <MovieSearch />}
+      {activeTab === 'Movies' && !selectedMovie && (
+        <MovieSearch onOpenMovie={handleOpenMovie} />
+      )}
+      {activeTab === 'Movies' && selectedMovie && (
+        <MovieScreen movie={selectedMovie} onBack={() => setSelectedMovie(null)} />
+      )}
       {activeTab === 'Customer Info' && <div>Customer Info content coming soon...</div>}
     </>
   )
