@@ -53,12 +53,50 @@
   min-width: 0;
 }
 
+.movieScreenTitleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  gap: 20px;
+}
+
 .movieScreenTitle {
-  margin: 0 0 12px 0;
+  margin: 0;
   font-size: 38px;
   font-weight: 900;
   color: #E8F7F4;
   text-shadow: 0 2px 4px rgba(0,0,0,0.35);
+  flex: 1;
+}
+
+.movieScreenRanking {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: linear-gradient(135deg, #7FF5D1, #5DEDC2);
+  border-radius: 12px;
+  padding: 12px 16px;
+  box-shadow: 0 4px 12px rgba(127, 245, 209, 0.45);
+  border: 2px solid rgba(127, 245, 209, 0.3);
+  flex-shrink: 0;
+}
+
+.movieScreenRankingNumber {
+  font-size: 24px;
+  font-weight: 900;
+  color: #0C1420;
+  line-height: 1;
+  margin-bottom: 2px;
+}
+
+.movieScreenRankingLabel {
+  font-size: 12px;
+  font-weight: 700;
+  color: #0C1420;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  line-height: 1;
 }
 
 .movieScreenMeta {

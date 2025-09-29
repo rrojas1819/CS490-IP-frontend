@@ -10,6 +10,7 @@ function MovieScreen({ movie, onBack, onOpenActor }) {
         genre,
         rating,
         actors,
+        ranking,
     } = movie
 
     const releaseYear = movie.release_year
@@ -29,7 +30,15 @@ function MovieScreen({ movie, onBack, onOpenActor }) {
                 )}
 
                 <div className="movieScreenBody">
-                    <h1 className="movieScreenTitle">{title || 'Movie'}</h1>
+                    <div className="movieScreenTitleRow">
+                        <h1 className="movieScreenTitle">{title || 'Movie'}</h1>
+                        {ranking && (
+                            <div className="movieScreenRanking">
+                                <span className="movieScreenRankingNumber">#{ranking}</span>
+                                <span className="movieScreenRankingLabel">Top 5</span>
+                            </div>
+                        )}
+                    </div>
                     <div className="movieScreenHeaderRow">
                         <div className="movieScreenMeta">
                             {genre && <span className="movieScreenMetaItem">{genre}</span>}

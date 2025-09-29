@@ -127,12 +127,16 @@ function App() {
     setActiveTab(tabName)
   }
 
-  const handleOpenMovie = async (movie) => {
+  const handleOpenMovie = async (movie, ranking = null) => {
     try {
       setLoading(true)
       pushToHistory(saveCurrentState())
       
       const detailedMovie = await filmAPI.getFilmById(movie.film_id)
+      
+      if (ranking !== null) {
+        detailedMovie.ranking = ranking
+      }
       clearAllSelections()
       setSelectedMovie(detailedMovie)
       setError(null)
@@ -165,7 +169,7 @@ function App() {
             <div className='movieCardContainerTop5'>
               {top5RentedMovies.map((movie, index) => (
                 <div key={movie.title} className='top5MovieItem'>
-                  <MovieCard movie={movie} onOpen={handleOpenMovie} />
+                  <MovieCard movie={movie} onOpen={() => handleOpenMovie(movie, index + 1)} />
                   <div className='rankNumber'>{index + 1}</div>
                 </div>
               ))}
