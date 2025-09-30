@@ -1,46 +1,74 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import MovieCard from './MovieCard'
+import { filmAPI, actorAPI } from '../utils/api'
 import '../styles/MovieSearch.css'
 
 function MovieSearch({ onOpenMovie }) {
-  const [displayedMovies, setDisplayedMovies] = useState(15)
   const [searchQuery, setSearchQuery] = useState('')
   const [filterType, setFilterType] = useState('movie')
-  const [filterValue, setFilterValue] = useState('') 
-  
-  const allMovies = []
+  const [searchResults, setSearchResults] = useState([])
+  const [isSearching, setIsSearching] = useState(false)
+  const searchTimeoutRef = useRef(null)
 
-  const handleMoreClick = () => {
-    setDisplayedMovies(prev => Math.min(prev + 10, allMovies.length))
-  }
+  useEffect(() => {
+    if (searchQuery.trim().length > 0) {
+      if (searchTimeoutRef.current) {
+        clearTimeout(searchTimeoutRef.current)
+      }
+      
+      searchTimeoutRef.current = setTimeout(async () => {
+        try {
+          setIsSearching(true)
+          let results = []
+          
+          switch (filterType) {
+            case 'movie':
+              results = await filmAPI.searchFilmsByTitle(searchQuery)
+              break
+            case 'genre':
+              results = await filmAPI.searchFilmsByGenre(searchQuery)
+              break
+            case 'actor':
+              results = await actorAPI.searchFilmsByActorName(searchQuery)
+              break
+            default:
+              results = await filmAPI.searchFilmsByTitle(searchQuery)
+          }
+          
+          setSearchResults(results)
+        } catch (error) {
+          setSearchResults([])
+        } finally {
+          setIsSearching(false)
+        }
+      }, 350)
+    } else {
+      setSearchResults([])
+    }
+    
+    return () => {
+      if (searchTimeoutRef.current) {
+        clearTimeout(searchTimeoutRef.current)
+      }
+    }
+  }, [searchQuery, filterType])
 
   const handleSearchChange = (e) => {
-    setSearchQuery(e.target.value)
+    const value = e.target.value
+    setSearchQuery(value)
+    
+    if (value.trim() === '') {
+      setSearchResults([])
+    }
   }
 
   const handleFilterTypeChange = (e) => {
     setFilterType(e.target.value)
     setSearchQuery('')
+    setSearchResults([])
   }
 
-  const filteredMovies = allMovies.filter(movie => {
-    if (searchQuery) {
-      switch (filterType) {
-        case 'actor':
-          return movie.actors.some(actor => 
-            actor.toLowerCase().includes(searchQuery.toLowerCase())
-          )
-        case 'genre':
-          return movie.genre.toLowerCase().includes(searchQuery.toLowerCase())
-        default:
-          return movie.title.toLowerCase().includes(searchQuery.toLowerCase())
-      }
-    }
-    
-    return true
-  })
-
-  const visibleMovies = searchQuery ? filteredMovies : allMovies.slice(0, displayedMovies)
+  const visibleMovies = searchQuery ? searchResults : []
 
   return (
     <div className="movieSearchContainer">
@@ -48,13 +76,20 @@ function MovieSearch({ onOpenMovie }) {
       
       <div className="searchContainer">
         <div className="searchInputContainer">
-          <input
-            type="text"
-            placeholder={`Search by ${filterType === 'actor' ? 'actor name' : filterType === 'genre' ? 'genre' : 'movie title'}...`}
-            value={searchQuery}
-            onChange={handleSearchChange}
-            className="searchInput"
-          />
+          <div className="searchInputWrapper">
+            <input
+              type="text"
+              placeholder={`Search by ${filterType === 'actor' ? 'actor name' : filterType === 'genre' ? 'genre' : 'movie title'}...`}
+              value={searchQuery}
+              onChange={handleSearchChange}
+              className="searchInput"
+            />
+            {isSearching && (
+              <div className="searchLoading">
+                <div className="loadingSpinner"></div>
+              </div>
+            )}
+          </div>
           <select
             value={filterType}
             onChange={handleFilterTypeChange}
@@ -68,18 +103,19 @@ function MovieSearch({ onOpenMovie }) {
       </div>
       
       <div className="movieSearchBox">
-        <div className="movieGrid">
-          {visibleMovies.map((movie, index) => (
-            <div className="movieItem" key={index}>
-              <MovieCard movie={movie} onOpen={onOpenMovie} />
-            </div>
-          ))}
-        </div>
-        
-        {!searchQuery && displayedMovies < allMovies.length && (
-          <button className="moreButton" onClick={handleMoreClick}>
-            More
-          </button>
+        {visibleMovies.length > 0 ? (
+          <div className="movieGrid">
+            {visibleMovies.map((movie, index) => (
+              <div className="movieItem" key={index}>
+                <MovieCard movie={movie} onOpen={onOpenMovie} />
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="noResults">
+            <h2>No Results Found</h2>
+            <p>Try adjusting your search or filter criteria</p>
+          </div>
         )}
       </div>
     </div>

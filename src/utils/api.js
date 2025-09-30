@@ -25,11 +25,14 @@ export const filmAPI = {
   getTop5RentedFilms: () => apiDefaultRequest('/films/top5rentedfilms'),
   getFilmGroupGenre: () => apiDefaultRequest('/films/filmgroupgenre'),
   getFilmById: (filmId) => apiDefaultRequest(`/films/filmdetails?film_id=${filmId}`),
+  searchFilmsByTitle: (title) => apiDefaultRequest(`/films/search/filmsbytitle?title=${encodeURIComponent(title)}`),
+  searchFilmsByGenre: (genre) => apiDefaultRequest(`/films/search/filmsbygenre?genre=${encodeURIComponent(genre)}`),
 };
 
 export const actorAPI = {
   
   getTop5Actors: () => apiDefaultRequest('/actors/top5actors'),
+  searchFilmsByActorName: (name) => apiDefaultRequest(`/actors/search/filmsbyactorname?name=${encodeURIComponent(name)}`),
   
 };
 
