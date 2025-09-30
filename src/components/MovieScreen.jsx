@@ -1,6 +1,12 @@
+import { useState } from 'react'
 import '../styles/MovieScreen.css'
+import RentReturnModal from './RentReturnModal'
 
 function MovieScreen({ movie, onBack, onOpenActor }) {
+    const [modalState, setModalState] = useState({
+        isOpen: false,
+        mode: 'rent'
+    })
     if (!movie) return null
 
     const {
@@ -19,12 +25,32 @@ function MovieScreen({ movie, onBack, onOpenActor }) {
         language_id,
         original_language_id,
         last_update,
+        total_copies,
+        rented_copies,
+        available_copies,
     } = movie
 
     const releaseYear = movie.release_year
     const filmId = movie.film_id
 
     const actorList = Array.isArray(actors) ? actors : []
+
+    const handleOpenModal = (mode) => {
+        setModalState({
+            isOpen: true,
+            mode
+        })
+    }
+
+    const handleCloseModal = () => {
+        setModalState({
+            isOpen: false,
+            mode: 'rent'
+        })
+    }
+
+    const handleModalSuccess = (data) => {
+    }
 
     return (
         <div className="movieScreenContainer">
@@ -59,7 +85,22 @@ function MovieScreen({ movie, onBack, onOpenActor }) {
                             {rental_rate && (
                                 <span className="movieScreenRentalRate">${rental_rate}/day</span>
                             )}
-                            <button type="button" className="movieScreenRentBtn movieScreenRentBtn--inline">Rent</button>
+                            <button 
+                                type="button" 
+                                className={`movieScreenReturnBtn movieScreenReturnBtn--inline ${rented_copies === 0 ? 'movieScreenReturnBtn--disabled' : ''}`}
+                                disabled={rented_copies === 0}
+                                onClick={() => rented_copies > 0 && handleOpenModal('return')}
+                            >
+                                Return
+                            </button>
+                            <button 
+                                type="button" 
+                                className={`movieScreenRentBtn movieScreenRentBtn--inline ${available_copies === 0 ? 'movieScreenRentBtn--disabled' : ''}`}
+                                disabled={available_copies === 0}
+                                onClick={() => available_copies > 0 && handleOpenModal('rent')}
+                            >
+                                {available_copies === 0 ? 'Out of Stock' : 'Rent'}
+                            </button>
                         </div>
                     </div>
 
@@ -116,6 +157,29 @@ function MovieScreen({ movie, onBack, onOpenActor }) {
                             )}
                         </div>
                         
+                        {(total_copies !== undefined || rented_copies !== undefined || available_copies !== undefined) && (
+                            <div className="movieScreenInventorySection">
+                                <h3 className="movieScreenSectionTitle">Inventory Status</h3>
+                                <div className="movieScreenInventoryGrid">
+                                    {total_copies !== undefined && total_copies !== null && (
+                                        <div className="movieScreenInventoryItem">
+                                            <strong>Total Copies:</strong> {total_copies}
+                                        </div>
+                                    )}
+                                    {rented_copies !== undefined && rented_copies !== null && (
+                                        <div className="movieScreenInventoryItem">
+                                            <strong>Currently Rented:</strong> {rented_copies}
+                                        </div>
+                                    )}
+                                    {available_copies !== undefined && available_copies !== null && (
+                                        <div className="movieScreenInventoryItem movieScreenInventoryItem--available">
+                                            <strong>Available:</strong> {available_copies}
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        )}
+                        
                         {special_features && (
                             <div className="movieScreenDetailItem movieScreenDetailItem--full">
                                 <strong>Special Features:</strong> {special_features}
@@ -142,6 +206,14 @@ function MovieScreen({ movie, onBack, onOpenActor }) {
                     )}
                 </div>
             </div>
+
+            <RentReturnModal
+                isOpen={modalState.isOpen}
+                onClose={handleCloseModal}
+                movie={movie}
+                mode={modalState.mode}
+                onSuccess={handleModalSuccess}
+            />
         </div>
     )
 }
