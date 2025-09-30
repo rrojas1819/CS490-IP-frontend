@@ -2,7 +2,7 @@ import { useState } from 'react'
 import '../styles/MovieScreen.css'
 import RentReturnModal from './RentReturnModal'
 
-function MovieScreen({ movie, onBack, onOpenActor }) {
+function MovieScreen({ movie, onBack, onOpenActor, onRefreshMovie }) {
     const [modalState, setModalState] = useState({
         isOpen: false,
         mode: 'rent'
@@ -50,6 +50,9 @@ function MovieScreen({ movie, onBack, onOpenActor }) {
     }
 
     const handleModalSuccess = (data) => {
+        if (onRefreshMovie) {
+            onRefreshMovie(movie)
+        }
     }
 
     return (

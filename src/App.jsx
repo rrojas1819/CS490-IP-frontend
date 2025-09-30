@@ -156,6 +156,15 @@ function App() {
     setSelectedActor(actor)
   }
 
+  const refreshMovieData = async (movie) => {
+    try {
+      const detailedMovie = await filmAPI.getFilmById(movie.film_id)
+      setSelectedMovie(detailedMovie)
+    } catch (err) {
+      console.error('Failed to refresh movie details:', err)
+    }
+  }
+
   return (
     <>
       <Header activeTab={activeTab} onTabClick={handleTabClick} />
@@ -200,6 +209,7 @@ function App() {
              movie={selectedMovie}
              onBack={goBack}
              onOpenActor={handleOpenActor}
+             onRefreshMovie={refreshMovieData}
            />
         </>
       )}
@@ -217,7 +227,7 @@ function App() {
       {activeTab === 'Movies' && selectedMovie && (
         <>
           {loading && <p>Loading movie details...</p>}
-           <MovieScreen movie={selectedMovie} onBack={goBack} />
+           <MovieScreen movie={selectedMovie} onBack={goBack} onRefreshMovie={refreshMovieData} />
         </>
       )}
 
