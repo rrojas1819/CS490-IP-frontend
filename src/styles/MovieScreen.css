@@ -112,6 +112,23 @@
   align-items: center;
   justify-content: space-between;
   gap: 16px;
+  margin-bottom: 18px;
+}
+
+.movieScreenRentInfo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.movieScreenRentalRate {
+  background: rgba(127, 245, 209, 0.15);
+  border: 1px solid rgba(127, 245, 209, 0.3);
+  color: #7FF5D1;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
 }
 
 .movieScreenMetaItem {
@@ -146,7 +163,14 @@
   margin-top: 18px;
   display: flex;
   flex-direction: column;
+  gap: 12px;
+}
+
+.movieScreenDetailsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 8px;
+  margin-bottom: 12px;
 }
 
 .movieScreenDetailItem {
@@ -155,6 +179,13 @@
   background: rgba(31, 66, 100, 0.3);
   border: 1px solid rgba(31, 66, 100, 0.25);
   border-radius: 8px;
+  font-size: 14px;
+  color: #E8F7F4;
+}
+
+.movieScreenDetailItem--full {
+  grid-column: 1 / -1;
+  margin-top: 8px;
 }
 
 .movieScreenRentBtn {

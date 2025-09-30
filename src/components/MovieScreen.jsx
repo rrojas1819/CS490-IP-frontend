@@ -2,7 +2,7 @@ import '../styles/MovieScreen.css'
 
 function MovieScreen({ movie, onBack, onOpenActor }) {
     if (!movie) return null
-/*I should add some symbol or something to showcase the rank number I'll do that later */
+
     const {
         title,
         imageUrl,
@@ -11,6 +11,14 @@ function MovieScreen({ movie, onBack, onOpenActor }) {
         rating,
         actors,
         ranking,
+        length,
+        replacement_cost,
+        special_features,
+        rental_duration,
+        rental_rate,
+        language_id,
+        original_language_id,
+        last_update,
     } = movie
 
     const releaseYear = movie.release_year
@@ -44,8 +52,15 @@ function MovieScreen({ movie, onBack, onOpenActor }) {
                             {genre && <span className="movieScreenMetaItem">{genre}</span>}
                             {rating && <span className="movieScreenMetaItem">Rated {rating}</span>}
                             {releaseYear && <span className="movieScreenMetaItem">{releaseYear}</span>}
+                            {length && <span className="movieScreenMetaItem">{length} min</span>}
+                            {rental_duration && <span className="movieScreenMetaItem">{rental_duration} days</span>}
                         </div>
-                        <button type="button" className="movieScreenRentBtn movieScreenRentBtn--inline">Rent</button>
+                        <div className="movieScreenRentInfo">
+                            {rental_rate && (
+                                <span className="movieScreenRentalRate">${rental_rate}/day</span>
+                            )}
+                            <button type="button" className="movieScreenRentBtn movieScreenRentBtn--inline">Rent</button>
+                        </div>
                     </div>
 
                     {description && (
@@ -56,13 +71,56 @@ function MovieScreen({ movie, onBack, onOpenActor }) {
                     )}
 
                     <div className="movieScreenDetails">
-                        {filmId !== undefined && filmId !== null && (
-                            <div className="movieScreenDetailItem">
-                                <strong>Film ID:</strong> {filmId}
+                        <h2 className="movieScreenSectionTitle">Movie Details</h2>
+                        
+                        <div className="movieScreenDetailsGrid">
+                            {filmId !== undefined && filmId !== null && (
+                                <div className="movieScreenDetailItem">
+                                    <strong>Film ID:</strong> {filmId}
+                                </div>
+                            )}
+                            {length !== undefined && length !== null && (
+                                <div className="movieScreenDetailItem">
+                                    <strong>Length:</strong> {length} minutes
+                                </div>
+                            )}
+                            {rental_duration !== undefined && rental_duration !== null && (
+                                <div className="movieScreenDetailItem">
+                                    <strong>Rental Duration:</strong> {rental_duration} days
+                                </div>
+                            )}
+                            {rental_rate !== undefined && rental_rate !== null && (
+                                <div className="movieScreenDetailItem">
+                                    <strong>Rental Rate:</strong> ${rental_rate}/day
+                                </div>
+                            )}
+                            {replacement_cost !== undefined && replacement_cost !== null && (
+                                <div className="movieScreenDetailItem">
+                                    <strong>Replacement Cost:</strong> ${replacement_cost}
+                                </div>
+                            )}
+                            {language_id !== undefined && language_id !== null && (
+                                <div className="movieScreenDetailItem">
+                                    <strong>Language ID:</strong> {language_id}
+                                </div>
+                            )}
+                            {original_language_id !== undefined && original_language_id !== null && (
+                                <div className="movieScreenDetailItem">
+                                    <strong>Original Language ID:</strong> {original_language_id}
+                                </div>
+                            )}
+                            {last_update && (
+                                <div className="movieScreenDetailItem">
+                                    <strong>Last Updated:</strong> {new Date(last_update).toLocaleDateString()}
+                                </div>
+                            )}
+                        </div>
+                        
+                        {special_features && (
+                            <div className="movieScreenDetailItem movieScreenDetailItem--full">
+                                <strong>Special Features:</strong> {special_features}
                             </div>
                         )}
-                       
-                       
                     </div>
 
                     {actorList.length > 0 && (
