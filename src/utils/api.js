@@ -37,6 +37,7 @@ export const actorAPI = {
 };
 
 export const customerAPI = {
+  listCustomers: () => apiDefaultRequest('/customers/allcustomers'),
   rentFilm: (filmId, customerId) => apiDefaultRequest(`/customers/rentfilm?film_id=${filmId}&customer_id=${customerId}`, {
     method: 'POST',
     headers: {

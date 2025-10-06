@@ -8,6 +8,7 @@ import './styles/Selection.css'
 import ActorsSection from './components/ActorsSection'
 import ActorScreen from './components/ActorScreen'
 import { filmAPI, actorAPI } from './utils/api'
+import CustomersScreen from './components/CustomersScreen'
 
 function App() {
   const [activeTab, setActiveTab] = useState('Home')
@@ -231,7 +232,9 @@ function App() {
         </>
       )}
 
-      {activeTab === 'Customer Info' && <div>Customer Info content coming soon...</div>}
+      {activeTab === 'Customer Info' && (
+        <CustomersScreen />
+      )}
     </>
   )
 }
