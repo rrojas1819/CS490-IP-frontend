@@ -19,29 +19,6 @@
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-.customersScreenControls {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.customersScreenLimitLabel {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: #AED7CB;
-  font-weight: 600;
-  letter-spacing: 0.3px;
-}
-
-.customersScreenLimitSelect {
-  padding: 10px 12px;
-  border: 1px solid rgba(31, 66, 100, 0.5);
-  border-radius: 10px;
-  background: rgba(22, 48, 72, 0.8);
-  color: #E8F7F4;
-  font-family: inherit;
-}
 
 .customersScreenError {
   color: #FC8181;
@@ -51,9 +28,21 @@
   border-radius: 6px;
 }
 
-.customersScreenLoading {
-  padding: 24px;
+
+.customersScreenLoadingOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(22, 48, 72, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: #AED7CB;
+  font-size: 18px;
+  font-weight: 600;
+  z-index: 10;
 }
 
 .customersScreenTableWrapper {
@@ -68,6 +57,12 @@
   min-width: 1200px;
   display: grid;
   grid-auto-rows: minmax(44px, auto);
+  position: relative;
+}
+
+.customersTable.loading {
+  opacity: 0.6;
+  pointer-events: none;
 }
 
 .customersTableHeader {
@@ -79,16 +74,6 @@
   z-index: 1;
 }
 
-.customersTableRow {
-  display: grid;
-  grid-template-columns: 110px 90px 130px 130px 1fr 200px 150px 150px 90px 180px;
-}
-
-.customersTableCell {
-  padding: 10px 12px;
-  border-bottom: 1px solid rgba(31, 66, 100, 0.35);
-  color: #E8F7F4;
-}
 
 .customersTableCell--head {
   font-weight: 700;

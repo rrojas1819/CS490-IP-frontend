@@ -1,0 +1,10 @@
+.customersTableRow {
+  display: grid;
+  grid-template-columns: 110px 90px 130px 130px 1fr 200px 150px 150px 90px 180px;
+}
+
+.customersTableCell {
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(31, 66, 100, 0.35);
+  color: #E8F7F4;
+}

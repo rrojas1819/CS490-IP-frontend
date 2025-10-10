@@ -1,0 +1,85 @@
+.customersScreenControls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.customersScreenSearch {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.customersScreenSearchInputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.customersScreenSearchInput {
+  padding: 15px 12px;
+  padding-right: 40px; 
+  border: 1px solid rgba(31, 66, 100, 0.5);
+  border-radius: 10px;
+  background: rgba(22, 48, 72, 0.8);
+  color: #E8F7F4;
+  font-family: inherit;
+  font-size: 16px;
+  min-width: 350px;
+  transition: all 0.2s ease;
+}
+
+.customersScreenSearchInput::placeholder {
+  color: #7A8B99;
+}
+
+.customersScreenSearchInput:focus {
+  outline: none;
+  border-color: #2A5B87;
+  box-shadow: 0 0 0 2px rgba(42, 91, 135, 0.2);
+}
+
+.customersScreenClearSearch {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(229, 62, 62, 0.3);
+  background: rgba(229, 62, 62, 0.15);
+  color: #FC8181;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.customersScreenClearSearch:hover {
+  background: rgba(229, 62, 62, 0.25);
+  border-color: rgba(229, 62, 62, 0.5);
+}
+
+.customersScreenSearchSpinner {
+  position: absolute;
+  right: 12px;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(174, 215, 203, 0.3);
+  border-top: 2px solid #AED7CB;
+  border-radius: 50%;
+}
+
+.customersScreenLimitLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #AED7CB;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+.customersScreenLimitSelect {
+  padding: 10px 12px;
+  border: 1px solid rgba(31, 66, 100, 0.5);
+  border-radius: 10px;
+  background: rgba(22, 48, 72, 0.8);
+  color: #E8F7F4;
+  font-family: inherit;
+}
