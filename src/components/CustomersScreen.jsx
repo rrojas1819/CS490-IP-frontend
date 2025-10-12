@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState, useCallback } from 'react'
 import { customerAPI } from '../utils/api'
 import CustomerRow from './CustomerRow'
 import CustomersControls from './CustomersControls'
+import AddCustomerModal from './AddCustomerModal'
 import '../styles/CustomersScreen.css'
 
 function CustomersScreen() {
@@ -15,11 +16,14 @@ function CustomersScreen() {
     const [isSearching, setIsSearching] = useState(false)
     const [searchResults, setSearchResults] = useState([])
     const [isSearchMode, setIsSearchMode] = useState(false)
+    const [isAddModalOpen, setIsAddModalOpen] = useState(false)
 
     const totalPages = useMemo(() => {
-        if (!total || !limit) return 1
-        return Math.max(1, Math.ceil(total / limit))
-    }, [total, limit])
+        const dataSource = isSearchMode ? searchResults : customers
+        const dataLength = Array.isArray(dataSource) ? dataSource.length : 0
+        if (!dataLength || !limit) return 1
+        return Math.max(1, Math.ceil(dataLength / limit))
+    }, [isSearchMode, searchResults, customers, limit])
 
     useEffect(() => {
         let isCancelled = false
@@ -63,7 +67,6 @@ function CustomersScreen() {
             const results = hasEnvelope ? data.customers : (Array.isArray(data) ? data : [])
             setSearchResults(results)
             setIsSearchMode(true)
-            setTotal(results.length)
             setPage(1)
         } catch (e) {
             setError('Failed to search customers.')
@@ -82,11 +85,32 @@ function CustomersScreen() {
         return () => clearTimeout(timeoutId)
     }, [searchTerm, searchCustomers])
 
+    // Reset page when limit changes
+    useEffect(() => {
+        setPage(1)
+    }, [limit])
+
     const clearSearch = () => {
         setSearchTerm('')
         setIsSearchMode(false)
         setSearchResults([])
         setPage(1)
+    }
+
+    const handleAddCustomer = () => {
+        setIsAddModalOpen(true)
+    }
+
+    const handleCustomerAdded = async (newCustomer) => {
+        try {
+            const data = await customerAPI.listCustomers()
+            const hasEnvelope = Array.isArray(data?.customers)
+            const list = hasEnvelope ? data.customers : (Array.isArray(data) ? data : [])
+            setCustomers(list)
+            setTotal(list.length)
+        } catch (e) {
+            setError('Failed to refresh customer list after adding new customer.')
+        }
     }
 
 
@@ -120,6 +144,7 @@ function CustomersScreen() {
                     limit={limit}
                     setLimit={setLimit}
                     setPage={setPage}
+                    onAddCustomer={handleAddCustomer}
                 />
             </div>
 
@@ -171,6 +196,12 @@ function CustomersScreen() {
                     Next
                 </button>
             </div>
+
+            <AddCustomerModal
+                isOpen={isAddModalOpen}
+                onClose={() => setIsAddModalOpen(false)}
+                onCustomerAdded={handleCustomerAdded}
+            />
         </div>
     )
 }

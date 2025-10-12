@@ -8,6 +8,11 @@ async function apiDefaultRequest(endpoint, options = {}) {
     const response = await fetch(url, options);
     
     if (!response.ok) {
+      /*
+      Debugging.
+      const errorText = await response.text();
+      console.error('Error response body:', errorText);
+      */
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     
@@ -39,6 +44,13 @@ export const actorAPI = {
 export const customerAPI = {
   listCustomers: () => apiDefaultRequest('/customers/allcustomers'),
   searchCustomersByParam: (param) => apiDefaultRequest(`/customers/searchparam?param=${encodeURIComponent(param)}`),
+  addCustomer: (customerData) => apiDefaultRequest('/customers/addcustomer', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(customerData),
+  }),
   rentFilm: (filmId, customerId) => apiDefaultRequest(`/customers/rentfilm?film_id=${filmId}&customer_id=${customerId}`, {
     method: 'POST',
     headers: {

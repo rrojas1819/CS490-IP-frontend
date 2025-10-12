@@ -1,0 +1,195 @@
+.addCustomerModalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.addCustomerModal {
+    background: linear-gradient(135deg, #163048 0%, #1F4264 100%);
+    border: 1px solid rgba(31, 66, 100, 0.35);
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    max-width: 600px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+}
+
+.addCustomerModalHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 24px;
+    border-bottom: 1px solid rgba(31, 66, 100, 0.35);
+}
+
+.addCustomerModalHeader h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #E8F7F4;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.addCustomerModalClose {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #7A8B99;
+    padding: 4px;
+    border-radius: 4px;
+    transition: all 0.2s;
+}
+
+.addCustomerModalClose:hover {
+    background-color: rgba(31, 66, 100, 0.3);
+    color: #AED7CB;
+}
+
+.addCustomerModalForm {
+    padding: 24px;
+}
+
+.addCustomerModalError {
+    background-color: rgba(229, 62, 62, 0.15);
+    border: 1px solid rgba(229, 62, 62, 0.3);
+    color: #FC8181;
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    font-size: 0.875rem;
+}
+
+.addCustomerModalSuccess {
+    background-color: rgba(34, 197, 94, 0.15);
+    border: 1px solid rgba(34, 197, 94, 0.3);
+    color: #6EE7B7;
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.addCustomerModalSection {
+    margin-bottom: 24px;
+}
+
+.addCustomerModalSection h3 {
+    margin: 0 0 16px 0;
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #AED7CB;
+    border-bottom: 1px solid rgba(31, 66, 100, 0.35);
+    padding-bottom: 8px;
+}
+
+.addCustomerModalRow {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.addCustomerModalField {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.addCustomerModalField--full {
+    flex: 1 1 100%;
+}
+
+.addCustomerModalField label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #AED7CB;
+    margin-bottom: 4px;
+}
+
+.addCustomerModalField input[type="text"],
+.addCustomerModalField input[type="email"],
+.addCustomerModalField input[type="tel"] {
+    padding: 10px 12px;
+    border: 1px solid rgba(31, 66, 100, 0.5);
+    border-radius: 8px;
+    background: rgba(22, 48, 72, 0.8);
+    color: #E8F7F4;
+    font-size: 0.875rem;
+    font-family: inherit;
+    transition: all 0.2s ease;
+}
+
+.addCustomerModalField input:focus {
+    outline: none;
+    border-color: #2A5B87;
+    box-shadow: 0 0 0 2px rgba(42, 91, 135, 0.2);
+}
+
+.addCustomerModalField input:invalid {
+    border-color: #FC8181;
+}
+
+.addCustomerModalField input::placeholder {
+    color: #7A8B99;
+}
+
+
+.addCustomerModalActions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(31, 66, 100, 0.35);
+}
+
+.addCustomerModalBtn {
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+    font-family: inherit;
+}
+
+.addCustomerModalBtn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.addCustomerModalBtn--primary {
+    background: rgba(34, 197, 94, 0.15);
+    color: #6EE7B7;
+    border-color: rgba(34, 197, 94, 0.3);
+}
+
+.addCustomerModalBtn--primary:hover:not(:disabled) {
+    background: rgba(34, 197, 94, 0.25);
+    border-color: rgba(34, 197, 94, 0.5);
+    color: #A7F3D0;
+}
+
+.addCustomerModalBtn--secondary {
+    background: rgba(22, 48, 72, 0.6);
+    color: #AED7CB;
+    border-color: rgba(31, 66, 100, 0.5);
+}
+
+.addCustomerModalBtn--secondary:hover:not(:disabled) {
+    background: rgba(31, 66, 100, 0.8);
+    border-color: rgba(31, 66, 100, 0.7);
+    color: #E8F7F4;
+}
+
+

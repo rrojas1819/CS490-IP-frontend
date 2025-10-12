@@ -8,7 +8,8 @@ function CustomersControls({
     clearSearch, 
     limit, 
     setLimit, 
-    setPage 
+    setPage,
+    onAddCustomer
 }) {
     const paginationOptions = [10, 20, 50, 100]
 
@@ -37,21 +38,30 @@ function CustomersControls({
                     </button>
                 )}
             </div>
-            <label className="customersScreenLimitLabel">
-                Per Page
-                <select
-                    className="customersScreenLimitSelect"
-                    value={limit}
-                    onChange={(e) => {
-                        setPage(1)
-                        setLimit(Number(e.target.value))
-                    }}
+            <div className="customersScreenActions">
+                <button
+                    type="button"
+                    onClick={onAddCustomer}
+                    className="customersScreenAddBtn"
                 >
-                    {paginationOptions.map((option) => (
-                        <option key={option} value={option}>{option}</option>
-                    ))}
-                </select>
-            </label>
+                    Add Customer
+                </button>
+                <label className="customersScreenLimitLabel">
+                    Per Page
+                    <select
+                        className="customersScreenLimitSelect"
+                        value={limit}
+                        onChange={(e) => {
+                            setPage(1)
+                            setLimit(Number(e.target.value))
+                        }}
+                    >
+                        {paginationOptions.map((option) => (
+                            <option key={option} value={option}>{option}</option>
+                        ))}
+                    </select>
+                </label>
+            </div>
         </div>
     )
 }

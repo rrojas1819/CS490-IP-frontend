@@ -4,6 +4,12 @@
   gap: 12px;
 }
 
+.customersScreenActions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
 .customersScreenSearch {
   display: flex;
   align-items: center;
@@ -82,4 +88,23 @@
   background: rgba(22, 48, 72, 0.8);
   color: #E8F7F4;
   font-family: inherit;
+}
+
+.customersScreenAddBtn {
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  background: rgba(34, 197, 94, 0.15);
+  color: #6EE7B7;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.customersScreenAddBtn:hover {
+  background: rgba(34, 197, 94, 0.25);
+  border-color: rgba(34, 197, 94, 0.5);
+  color: #A7F3D0;
 }
