@@ -222,11 +222,16 @@
 
 .editCustomerFormActions {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     gap: 12px;
     padding-top: 16px;
     border-top: 1px solid rgba(31, 66, 100, 0.35);
 }
+.editCustomerRightActions {
+    display: flex;
+    gap: 12px;
+}
+
 
 .editCustomerCancelBtn,
 .editCustomerSaveBtn {
@@ -268,6 +273,74 @@
 .editCustomerSaveBtn:disabled {
     opacity: 0.5;
     cursor: not-allowed;
+}
+
+
+/* Bottom-left delete button area */
+.editCustomerDeleteWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.editCustomerDeleteBtn {
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 1px solid rgba(229, 62, 62, 0.35);
+    background: rgba(229, 62, 62, 0.15);
+    color: #FC8181;
+}
+
+.editCustomerDeleteBtn:hover:not(:disabled) {
+    background: rgba(229, 62, 62, 0.25);
+    border-color: rgba(229, 62, 62, 0.5);
+    color: #FEB2B2;
+}
+
+.editCustomerDeleteBtn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Mini confirmation modal inside of edit modal */
+.miniConfirmBackdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 5;
+}
+
+.miniConfirmModal {
+    background: linear-gradient(135deg, #163048 0%, #1F4264 100%);
+    border: 1px solid rgba(31, 66, 100, 0.35);
+    border-radius: 10px;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+    padding: 16px;
+    width: 420px;
+}
+
+.miniConfirmTitle {
+    color: #E8F7F4;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.miniConfirmText {
+    color: #AED7CB;
+    margin-bottom: 16px;
+}
+
+.miniConfirmActions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
 }
 
 

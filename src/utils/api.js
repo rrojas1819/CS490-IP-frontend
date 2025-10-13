@@ -70,6 +70,12 @@ export const customerAPI = {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(customerData),
+  }),
+  deleteCustomer: (customerId) => apiDefaultRequest(`/customers/deletecustomer/${customerId}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
   })
 };
 

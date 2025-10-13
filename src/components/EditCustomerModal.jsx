@@ -23,6 +23,7 @@ function EditCustomerModal({ isOpen, onClose, customer, onCustomerUpdated }) {
     const [isSuccess, setIsSuccess] = useState(false)
     const [changes, setChanges] = useState([])
     const [lastSavedData, setLastSavedData] = useState(null)
+    const [isDeleted, setIsDeleted] = useState(false)
 
     useEffect(() => {
         if (customer && isOpen) {
@@ -45,6 +46,7 @@ function EditCustomerModal({ isOpen, onClose, customer, onCustomerUpdated }) {
             setError('')
             setIsSuccess(false)
             setChanges([])
+            setIsDeleted(false)
         }
     }, [customer, isOpen])
 
@@ -119,6 +121,23 @@ function EditCustomerModal({ isOpen, onClose, customer, onCustomerUpdated }) {
         onClose()
     }
 
+    const handleCustomerDeleted = () => {
+        setIsDeleted(true)
+        setFormData({
+            first_name: '',
+            last_name: '',
+            email: '',
+            active: 1,
+            address: '',
+            address2: '',
+            district: '',
+            city: '',
+            country: '',
+            postal_code: '',
+            phone: ''
+        })
+    }
+
     if (!isOpen || !customer) return null
 
     return (
@@ -136,17 +155,20 @@ function EditCustomerModal({ isOpen, onClose, customer, onCustomerUpdated }) {
                 </div>
 
                 <div className="editCustomerModalContent">
-                    <CustomerDetailsLeftPanel customer={customer} />
+                    <CustomerDetailsLeftPanel customer={isDeleted ? {} : customer} />
 
                     <CustomerDetailsRightPanel
                         formData={formData}
                         handleInputChange={handleInputChange}
                         handleSubmit={handleSubmit}
                         handleCancel={handleClose}
-                        isLoading={isLoading}
+                        isLoading={isLoading || isDeleted}
                         error={error}
                         isSuccess={isSuccess}
                         changes={changes}
+                        customerId={customer.customer_id}
+                        disabledControls={isDeleted}
+                        onCustomerDeleted={handleCustomerDeleted}
                     />
                 </div>
             </div>

@@ -61,24 +61,3 @@ body, p, div, span, h1, h2, h3, h4, h5, h6, li, td, th, label, input, textarea, 
   color: #E8F7F4;
 }
 
-/* Ensure customer info content is readable */
-.customer-info-content {
-  color: #AED7CB !important;
-}
-
-.customer-info-content p,
-.customer-info-content div,
-.customer-info-content span,
-.customer-info-content h1,
-.customer-info-content h2,
-.customer-info-content h3,
-.customer-info-content h4,
-.customer-info-content h5,
-.customer-info-content h6 {
-  color: #AED7CB !important;
-}
-
-/* Override any black text specifically */
-.black-text-fix {
-  color: #AED7CB !important;
-}

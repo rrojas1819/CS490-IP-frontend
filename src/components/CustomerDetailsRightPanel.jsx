@@ -1,6 +1,9 @@
 import '../styles/EditCustomerModal.css'
+import DeleteCustomerButton from './DeleteCustomerButton'
+import { useState } from 'react'
 
-function CustomerDetailsRightPanel({ formData, handleInputChange, handleSubmit, handleCancel, isLoading, error, isSuccess, changes }) {
+function CustomerDetailsRightPanel({ formData, handleInputChange, handleSubmit, handleCancel, isLoading, error, isSuccess, changes, customerId, disabledControls = false, onCustomerDeleted }) {
+    const [topAlert, setTopAlert] = useState({ type: null, message: '' })
     return (
         <div className="editCustomerModalRight">
             <form onSubmit={handleSubmit} className="editCustomerForm">
@@ -20,6 +23,12 @@ function CustomerDetailsRightPanel({ formData, handleInputChange, handleSubmit, 
                     </div>
                 )}
 
+                {topAlert.message && (
+                    <div className={topAlert.type === 'error' ? 'editCustomerError' : 'editCustomerSuccess'}>
+                        {topAlert.message}
+                    </div>
+                )}
+
                 {error && (
                     <div className="editCustomerError">{error}</div>
                 )}
@@ -36,6 +45,7 @@ function CustomerDetailsRightPanel({ formData, handleInputChange, handleSubmit, 
                                 value={formData.first_name}
                                 onChange={handleInputChange}
                                 required
+                                disabled={disabledControls}
                             />
                         </div>
                         <div className="editCustomerFormField">
@@ -47,6 +57,7 @@ function CustomerDetailsRightPanel({ formData, handleInputChange, handleSubmit, 
                                 value={formData.last_name}
                                 onChange={handleInputChange}
                                 required
+                                disabled={disabledControls}
                             />
                         </div>
                     </div>
@@ -60,6 +71,7 @@ function CustomerDetailsRightPanel({ formData, handleInputChange, handleSubmit, 
                                 name="email"
                                 value={formData.email}
                                 onChange={handleInputChange}
+                                disabled={disabledControls}
                             />
                         </div>
                         <div className="editCustomerFormField">
@@ -69,6 +81,7 @@ function CustomerDetailsRightPanel({ formData, handleInputChange, handleSubmit, 
                                     name="active"
                                     checked={formData.active === 1}
                                     onChange={handleInputChange}
+                                    disabled={disabledControls}
                                 />
                                 Active
                             </label>
@@ -87,6 +100,7 @@ function CustomerDetailsRightPanel({ formData, handleInputChange, handleSubmit, 
                             value={formData.address}
                             onChange={handleInputChange}
                             required
+                            disabled={disabledControls}
                         />
                     </div>
 
@@ -98,6 +112,7 @@ function CustomerDetailsRightPanel({ formData, handleInputChange, handleSubmit, 
                             name="address2"
                             value={formData.address2}
                             onChange={handleInputChange}
+                            disabled={disabledControls}
                         />
                     </div>
 
@@ -110,6 +125,7 @@ function CustomerDetailsRightPanel({ formData, handleInputChange, handleSubmit, 
                                 name="district"
                                 value={formData.district}
                                 onChange={handleInputChange}
+                                disabled={disabledControls}
                             />
                         </div>
                         <div className="editCustomerFormField">
@@ -120,6 +136,7 @@ function CustomerDetailsRightPanel({ formData, handleInputChange, handleSubmit, 
                                 name="postal_code"
                                 value={formData.postal_code}
                                 onChange={handleInputChange}
+                                disabled={disabledControls}
                             />
                         </div>
                     </div>
@@ -134,6 +151,7 @@ function CustomerDetailsRightPanel({ formData, handleInputChange, handleSubmit, 
                                 value={formData.city}
                                 onChange={handleInputChange}
                                 required
+                                disabled={disabledControls}
                             />
                         </div>
                         <div className="editCustomerFormField">
@@ -145,6 +163,7 @@ function CustomerDetailsRightPanel({ formData, handleInputChange, handleSubmit, 
                                 value={formData.country}
                                 onChange={handleInputChange}
                                 required
+                                disabled={disabledControls}
                             />
                         </div>
                     </div>
@@ -157,26 +176,35 @@ function CustomerDetailsRightPanel({ formData, handleInputChange, handleSubmit, 
                             name="phone"
                             value={formData.phone}
                             onChange={handleInputChange}
+                            disabled={disabledControls}
                         />
                     </div>
                 </div>
 
                 <div className="editCustomerFormActions">
-                    <button
-                        type="button"
-                        className="editCustomerCancelBtn"
-                        onClick={handleCancel}
-                        disabled={isLoading}
-                    >
-                        Cancel
-                    </button>
-                    <button
-                        type="submit"
-                        className="editCustomerSaveBtn"
-                        disabled={isLoading}
-                    >
-                        {isLoading ? 'Saving...' : 'Save Changes'}
-                    </button>
+                    <DeleteCustomerButton customerId={customerId} onNotify={(payload) => {
+                        setTopAlert(payload)
+                        if (payload?.type === 'success') {
+                            if (onCustomerDeleted) onCustomerDeleted()
+                        }
+                    }} />
+                    <div className="editCustomerRightActions">
+                        <button
+                            type="button"
+                            className="editCustomerCancelBtn"
+                            onClick={handleCancel}
+                            disabled={isLoading || disabledControls}
+                        >
+                            Cancel
+                        </button>
+                        <button
+                            type="submit"
+                            className="editCustomerSaveBtn"
+                            disabled={isLoading || disabledControls}
+                        >
+                            {isLoading ? 'Saving...' : 'Save Changes'}
+                        </button>
+                    </div>
                 </div>
             </form>
         </div>
