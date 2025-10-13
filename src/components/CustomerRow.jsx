@@ -1,6 +1,6 @@
 import '../styles/CustomerRow.css'
 
-function CustomerRow({ customer, onEdit, onDelete, onViewDetails }) {
+function CustomerRow({ customer, onEdit }) {
     const getCustomerCellData = (customer) => [
         customer.customer_id,
         customer.store_id,
@@ -23,13 +23,34 @@ function CustomerRow({ customer, onEdit, onDelete, onViewDetails }) {
         return d.toLocaleString()
     }
 
+    const handleRowClick = (e) => {
+        if (e.target.closest('.customerEditBtn')) {
+            return
+        }
+        onEdit(customer)
+    }
+
+    const handleEditClick = (e) => {
+        e.stopPropagation()
+        onEdit(customer)
+    }
+
     return (
-        <div className="customersTableRow" role="row">
+        <div className="customersTableRow" role="row" onClick={handleRowClick}>
             {getCustomerCellData(customer).map((data, index) => (
                 <div key={index} className="customersTableCell" role="cell">
                     {data}
                 </div>
             ))}
+            <div className="customersTableCell customersTableCell--actions" role="cell">
+                <button 
+                    className="customerEditBtn"
+                    onClick={handleEditClick}
+                    title="Edit Customer"
+                >
+                    Edit
+                </button>
+            </div>
         </div>
     )
 }

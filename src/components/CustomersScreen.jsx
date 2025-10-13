@@ -3,6 +3,7 @@ import { customerAPI } from '../utils/api'
 import CustomerRow from './CustomerRow'
 import CustomersControls from './CustomersControls'
 import AddCustomerModal from './AddCustomerModal'
+import EditCustomerModal from './EditCustomerModal'
 import '../styles/CustomersScreen.css'
 
 function CustomersScreen() {
@@ -17,6 +18,8 @@ function CustomersScreen() {
     const [searchResults, setSearchResults] = useState([])
     const [isSearchMode, setIsSearchMode] = useState(false)
     const [isAddModalOpen, setIsAddModalOpen] = useState(false)
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false)
+    const [selectedCustomer, setSelectedCustomer] = useState(null)
 
     const totalPages = useMemo(() => {
         const dataSource = isSearchMode ? searchResults : customers
@@ -113,10 +116,35 @@ function CustomersScreen() {
         }
     }
 
+    const handleEditCustomer = (customer) => {
+        setSelectedCustomer(customer)
+        setIsEditModalOpen(true)
+    }
+
+    const handleCustomerUpdated = async () => {
+        try {
+            const data = await customerAPI.listCustomers()
+            const hasEnvelope = Array.isArray(data?.customers)
+            const list = hasEnvelope ? data.customers : (Array.isArray(data) ? data : [])
+            setCustomers(list)
+            setTotal(list.length)
+            
+         
+            if (isSearchMode && searchTerm.trim()) {
+                const searchData = await customerAPI.searchCustomersByParam(searchTerm)
+                const hasSearchEnvelope = Array.isArray(searchData?.customers)
+                const searchResults = hasSearchEnvelope ? searchData.customers : (Array.isArray(searchData) ? searchData : [])
+                setSearchResults(searchResults)
+            }
+        } catch (e) {
+            setError('Failed to refresh customer list after updating customer.')
+        }
+    }
+
 
     const tableHeaders = [
         'Customer ID', 'Store ID', 'First Name', 'Last Name', 'Email',
-        'Address', 'City', 'Country', 'Active', 'Create Date'
+        'Address', 'City', 'Country', 'Active', 'Create Date', 'Edit'
     ]
 
 
@@ -165,6 +193,7 @@ function CustomersScreen() {
                         <CustomerRow 
                             key={customer.customer_id || customer.id} 
                             customer={customer}
+                            onEdit={handleEditCustomer}
                         />
                     ))}
                     {isLoading || isSearching ? (
@@ -201,6 +230,16 @@ function CustomersScreen() {
                 isOpen={isAddModalOpen}
                 onClose={() => setIsAddModalOpen(false)}
                 onCustomerAdded={handleCustomerAdded}
+            />
+
+            <EditCustomerModal
+                isOpen={isEditModalOpen}
+                onClose={() => {
+                    setIsEditModalOpen(false)
+                    setSelectedCustomer(null)
+                }}
+                customer={selectedCustomer}
+                onCustomerUpdated={handleCustomerUpdated}
             />
         </div>
     )

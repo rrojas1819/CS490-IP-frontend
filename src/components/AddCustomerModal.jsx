@@ -18,6 +18,7 @@ function AddCustomerModal({ isOpen, onClose, onCustomerAdded }) {
     const [error, setError] = useState('')
     const [isSuccess, setIsSuccess] = useState(false)
     const [newCustomerId, setNewCustomerId] = useState(null)
+    const [newCustomerEmail, setNewCustomerEmail] = useState(null)
 
     const handleInputChange = (e) => {
         const { name, value } = e.target
@@ -58,6 +59,7 @@ function AddCustomerModal({ isOpen, onClose, onCustomerAdded }) {
 
             const result = await customerAPI.addCustomer(formattedData)
             setNewCustomerId(result.customer_id)
+            setNewCustomerEmail(result.email)
             onCustomerAdded(result)
             setIsSuccess(true)
             setError('')
@@ -84,6 +86,7 @@ function AddCustomerModal({ isOpen, onClose, onCustomerAdded }) {
         setError('')
         setIsSuccess(false)
         setNewCustomerId(null)
+        setNewCustomerEmail(null)
         onClose()
     }
 
@@ -111,6 +114,9 @@ function AddCustomerModal({ isOpen, onClose, onCustomerAdded }) {
                     {isSuccess && (
                         <div className="addCustomerModalSuccess">
                             Customer added successfully! Customer ID: {newCustomerId}
+                            {newCustomerEmail && (
+                                <div>Email: {newCustomerEmail}</div>
+                            )}
                         </div>
                     )}
 

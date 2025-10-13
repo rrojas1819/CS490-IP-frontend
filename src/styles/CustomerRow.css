@@ -1,10 +1,46 @@
 .customersTableRow {
   display: grid;
-  grid-template-columns: 110px 90px 130px 130px 1fr 200px 150px 150px 90px 180px;
+  grid-template-columns: 110px 90px 130px 130px 1fr 200px 150px 150px 90px 180px 60px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.customersTableRow:hover {
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .customersTableCell {
   padding: 10px 12px;
   border-bottom: 1px solid rgba(31, 66, 100, 0.35);
   color: #E8F7F4;
+  display: flex;
+  align-items: center;
+}
+
+.customersTableCell--actions {
+  justify-content: center;
+  padding: 8px;
+}
+
+.customerEditBtn {
+  background: rgba(34, 197, 94, 0.15);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 6px 10px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  color: #6EE7B7;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  font-family: inherit;
+}
+
+.customerEditBtn:hover {
+  background: rgba(34, 197, 94, 0.25);
+  border-color: rgba(34, 197, 94, 0.5);
+  color: #A7F3D0;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }

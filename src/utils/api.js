@@ -63,6 +63,13 @@ export const customerAPI = {
     headers: {
       'Content-Type': 'application/json',
     },
+  }),
+  updateCustomer: (customerId, customerData) => apiDefaultRequest(`/customers/updatecustomer/${customerId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(customerData),
   })
 };
 
