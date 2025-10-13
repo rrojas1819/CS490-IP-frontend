@@ -9,10 +9,16 @@ async function apiDefaultRequest(endpoint, options = {}) {
     
     if (!response.ok) {
       /*
-      Debugging.
-      const errorText = await response.text();
-      console.error('Error response body:', errorText);
-      */
+      try {
+        const errorData = await response.json();
+        if (errorData.error) {
+          throw new Error(errorData.error);
+        }
+      } catch (parseError) {
+        const errorMessage = response.statusText || `HTTP error! status: ${response.status}`;
+        throw new Error(errorMessage);
+      }
+        */
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     

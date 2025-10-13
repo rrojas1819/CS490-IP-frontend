@@ -24,6 +24,18 @@ function EditCustomerModal({ isOpen, onClose, customer, onCustomerUpdated }) {
     const [changes, setChanges] = useState([])
     const [lastSavedData, setLastSavedData] = useState(null)
     const [isDeleted, setIsDeleted] = useState(false)
+    const [emailError, setEmailError] = useState('')
+    const [phoneError, setPhoneError] = useState('')
+
+    const validateEmail = (email) => {
+        const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|org|eu|edu|email|net)$/i
+        return emailPattern.test(email)
+    }
+
+    const validatePhone = (phone) => {
+        const phonePattern = /^(\+1\s?)?(\(?[0-9]{3}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{4})$/
+        return phonePattern.test(phone)
+    }
 
     useEffect(() => {
         if (customer && isOpen) {
@@ -52,10 +64,36 @@ function EditCustomerModal({ isOpen, onClose, customer, onCustomerUpdated }) {
 
     const handleInputChange = (e) => {
         const { name, value, type, checked } = e.target
-        setFormData(prev => ({
-            ...prev,
-            [name]: type === 'checkbox' ? (checked ? 1 : 0) : value
-        }))
+        
+        if (name === 'phone') {
+            const phoneValue = value.replace(/[^\d\s\-\(\)\+]/g, '')
+            setFormData(prev => ({
+                ...prev,
+                [name]: phoneValue
+            }))
+            
+            if (phoneValue && !validatePhone(phoneValue)) {
+                setPhoneError('Phone number must be in format: 5551234567, (555) 123-4567, or +1 555 123 4567')
+            } else {
+                setPhoneError('')
+            }
+        } else if (name === 'email') {
+            setFormData(prev => ({
+                ...prev,
+                [name]: value
+            }))
+            
+            if (value && !validateEmail(value)) {
+                setEmailError('Email must be in format: user@domain.com (domains: com, org, eu, edu, email, net)')
+            } else {
+                setEmailError('')
+            }
+        } else {
+            setFormData(prev => ({
+                ...prev,
+                [name]: type === 'checkbox' ? (checked ? 1 : 0) : value
+            }))
+        }
     }
 
     const handleSubmit = async (e) => {
@@ -64,6 +102,20 @@ function EditCustomerModal({ isOpen, onClose, customer, onCustomerUpdated }) {
 
         setIsLoading(true)
         setError('')
+        setEmailError('')
+        setPhoneError('')
+
+        if (formData.email && !validateEmail(formData.email)) {
+            setEmailError('Email must be in format: user@domain.com (domains: com, org, eu, edu, email, net)')
+            setIsLoading(false)
+            return
+        }
+
+        if (formData.phone && !validatePhone(formData.phone)) {
+            setPhoneError('Phone number must be in format: 5551234567, (555) 123-4567, or +1 555 123 4567')
+            setIsLoading(false)
+            return
+        }
 
         try {
             const fieldLabels = {
@@ -106,7 +158,8 @@ function EditCustomerModal({ isOpen, onClose, customer, onCustomerUpdated }) {
             setIsSuccess(true)
             setError('')
         } catch (err) {
-            setError('Failed to update customer. Please try again.')
+            const errorMessage = err.message || 'Failed to update customer. Please try again.'
+            setError(errorMessage)
             console.error('Error updating customer:', err)
         } finally {
             setIsLoading(false)
@@ -115,6 +168,8 @@ function EditCustomerModal({ isOpen, onClose, customer, onCustomerUpdated }) {
 
     const handleClose = () => {
         setError('')
+        setEmailError('')
+        setPhoneError('')
         setIsSuccess(false)
         setChanges([])
         setLastSavedData(null)
@@ -164,6 +219,8 @@ function EditCustomerModal({ isOpen, onClose, customer, onCustomerUpdated }) {
                         handleCancel={handleClose}
                         isLoading={isLoading || isDeleted}
                         error={error}
+                        emailError={emailError}
+                        phoneError={phoneError}
                         isSuccess={isSuccess}
                         changes={changes}
                         customerId={customer.customer_id}

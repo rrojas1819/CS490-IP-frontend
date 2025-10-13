@@ -23,20 +23,13 @@ function CustomerRow({ customer, onEdit }) {
         return d.toLocaleString()
     }
 
-    const handleRowClick = (e) => {
-        if (e.target.closest('.customerEditBtn')) {
-            return
-        }
-        onEdit(customer)
-    }
-
     const handleEditClick = (e) => {
         e.stopPropagation()
         onEdit(customer)
     }
 
     return (
-        <div className="customersTableRow" role="row" onClick={handleRowClick}>
+        <div className="customersTableRow" role="row">
             {getCustomerCellData(customer).map((data, index) => (
                 <div key={index} className="customersTableCell" role="cell">
                     {data}

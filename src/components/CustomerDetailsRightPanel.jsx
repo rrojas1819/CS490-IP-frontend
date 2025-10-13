@@ -2,7 +2,7 @@ import '../styles/EditCustomerModal.css'
 import DeleteCustomerButton from './DeleteCustomerButton'
 import { useState } from 'react'
 
-function CustomerDetailsRightPanel({ formData, handleInputChange, handleSubmit, handleCancel, isLoading, error, isSuccess, changes, customerId, disabledControls = false, onCustomerDeleted }) {
+function CustomerDetailsRightPanel({ formData, handleInputChange, handleSubmit, handleCancel, isLoading, error, emailError, phoneError, isSuccess, changes, customerId, disabledControls = false, onCustomerDeleted }) {
     const [topAlert, setTopAlert] = useState({ type: null, message: '' })
     return (
         <div className="editCustomerModalRight">
@@ -31,6 +31,14 @@ function CustomerDetailsRightPanel({ formData, handleInputChange, handleSubmit, 
 
                 {error && (
                     <div className="editCustomerError">{error}</div>
+                )}
+
+                {emailError && (
+                    <div className="editCustomerError">{emailError}</div>
+                )}
+
+                {phoneError && (
+                    <div className="editCustomerError">{phoneError}</div>
                 )}
 
                 <div className="editCustomerFormSection">
@@ -64,13 +72,14 @@ function CustomerDetailsRightPanel({ formData, handleInputChange, handleSubmit, 
 
                     <div className="editCustomerFormRow">
                         <div className="editCustomerFormField">
-                            <label htmlFor="email">Email</label>
+                            <label htmlFor="email">Email *</label>
                             <input
                                 type="email"
                                 id="email"
                                 name="email"
                                 value={formData.email}
                                 onChange={handleInputChange}
+                                required
                                 disabled={disabledControls}
                             />
                         </div>

@@ -6,6 +6,7 @@ function AddCustomerModal({ isOpen, onClose, onCustomerAdded }) {
     const [formData, setFormData] = useState({
         first_name: '',
         last_name: '',
+        email: '',
         address: '',
         address2: '',
         district: '',
@@ -19,6 +20,18 @@ function AddCustomerModal({ isOpen, onClose, onCustomerAdded }) {
     const [isSuccess, setIsSuccess] = useState(false)
     const [newCustomerId, setNewCustomerId] = useState(null)
     const [newCustomerEmail, setNewCustomerEmail] = useState(null)
+    const [emailError, setEmailError] = useState('')
+    const [phoneError, setPhoneError] = useState('')
+
+    const validateEmail = (email) => {
+        const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|org|eu|edu|email|net)$/i
+        return emailPattern.test(email)
+    }
+
+    const validatePhone = (phone) => {
+        const phonePattern = /^(\+1\s?)?(\(?[0-9]{3}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{4})$/
+        return phonePattern.test(phone)
+    }
 
     const handleInputChange = (e) => {
         const { name, value } = e.target
@@ -29,6 +42,23 @@ function AddCustomerModal({ isOpen, onClose, onCustomerAdded }) {
                 ...prev,
                 [name]: phoneValue
             }))
+            
+            if (phoneValue && !validatePhone(phoneValue)) {
+                setPhoneError('Phone number must be in format: 5551234567, (555) 123-4567, or +1 555 123 4567')
+            } else {
+                setPhoneError('')
+            }
+        } else if (name === 'email') {
+            setFormData(prev => ({
+                ...prev,
+                [name]: value
+            }))
+            
+            if (value && !validateEmail(value)) {
+                setEmailError('Email must be in format: user@domain.com (domains: com, org, eu, edu, email, net)')
+            } else {
+                setEmailError('')
+            }
         } else {
             setFormData(prev => ({
                 ...prev,
@@ -41,6 +71,20 @@ function AddCustomerModal({ isOpen, onClose, onCustomerAdded }) {
         e.preventDefault()
         setIsSubmitting(true)
         setError('')
+        setEmailError('')
+        setPhoneError('')
+
+        if (!validateEmail(formData.email)) {
+            setEmailError('Email must be in format: user@domain.com (domains: com, org, eu, edu, email, net)')
+            setIsSubmitting(false)
+            return
+        }
+
+        if (!validatePhone(formData.phone)) {
+            setPhoneError('Phone number must be in format: 5551234567, (555) 123-4567, or +1 555 123 4567')
+            setIsSubmitting(false)
+            return
+        }
 
         try {
             const capitalize = (str) => str.trim().toUpperCase()
@@ -64,7 +108,8 @@ function AddCustomerModal({ isOpen, onClose, onCustomerAdded }) {
             setIsSuccess(true)
             setError('')
         } catch (err) {
-            setError(err.message || 'Failed to add customer')
+            const errorMessage = err.message || 'Failed to add customer'
+            setError(errorMessage)
             setIsSuccess(false)
         } finally {
             setIsSubmitting(false)
@@ -75,6 +120,7 @@ function AddCustomerModal({ isOpen, onClose, onCustomerAdded }) {
         setFormData({
             first_name: '',
             last_name: '',
+            email: '',
             address: '',
             address2: '',
             district: '',
@@ -84,6 +130,8 @@ function AddCustomerModal({ isOpen, onClose, onCustomerAdded }) {
             phone: ''
         })
         setError('')
+        setEmailError('')
+        setPhoneError('')
         setIsSuccess(false)
         setNewCustomerId(null)
         setNewCustomerEmail(null)
@@ -109,6 +157,14 @@ function AddCustomerModal({ isOpen, onClose, onCustomerAdded }) {
                 <form onSubmit={handleSubmit} className="addCustomerModalForm">
                     {error && (
                         <div className="addCustomerModalError">{error}</div>
+                    )}
+                    
+                    {emailError && (
+                        <div className="addCustomerModalError">{emailError}</div>
+                    )}
+                    
+                    {phoneError && (
+                        <div className="addCustomerModalError">{phoneError}</div>
                     )}
                     
                     {isSuccess && (
@@ -141,6 +197,19 @@ function AddCustomerModal({ isOpen, onClose, onCustomerAdded }) {
                                     id="last_name"
                                     name="last_name"
                                     value={formData.last_name}
+                                    onChange={handleInputChange}
+                                    required
+                                />
+                            </div>
+                        </div>
+                        <div className="addCustomerModalRow">
+                            <div className="addCustomerModalField addCustomerModalField--full">
+                                <label htmlFor="email">Email *</label>
+                                <input
+                                    type="email"
+                                    id="email"
+                                    name="email"
+                                    value={formData.email}
                                     onChange={handleInputChange}
                                     required
                                 />
@@ -222,7 +291,6 @@ function AddCustomerModal({ isOpen, onClose, onCustomerAdded }) {
                                 />
                             </div>
 
-                            {/*Come back and fix phone number regex/input*/}
                             <div className="addCustomerModalField">
                                 <label htmlFor="phone">Phone *</label>
                                 <input
@@ -231,9 +299,7 @@ function AddCustomerModal({ isOpen, onClose, onCustomerAdded }) {
                                     name="phone"
                                     value={formData.phone}
                                     onChange={handleInputChange}
-                                    pattern="[\d\s\-\(\)\+]+"
-                                    title="Please enter a valid phone number (digits, spaces, hyphens, parentheses, and plus sign only)"
-                                    placeholder="e.g., (555) 123-4567 or +1 555 123 4567"
+                                    placeholder="e.g., 5551234567, (555) 123-4567, or +1 555 123 4567"
                                     required
                                 />
                             </div>
