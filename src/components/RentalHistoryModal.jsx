@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react'
 import { customerAPI } from '../utils/api'
+import ReturnFilmModal from './ReturnFilmModal'
 import '../styles/RentalHistoryModal.css'
 
 function RentalHistoryModal({ isOpen, onClose, customer }) {
     const [rentalHistory, setRentalHistory] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState('')
+    const [returnModalOpen, setReturnModalOpen] = useState(false)
+    const [selectedRental, setSelectedRental] = useState(null)
 
     const tableHeaders = [
         'Film Title',
@@ -14,8 +17,24 @@ function RentalHistoryModal({ isOpen, onClose, customer }) {
         'Status',
         'Days Rented',
         'Rating',
-        'Rental Rate'
+        'Rental Rate',
+        'Actions'
     ]
+
+    const handleReturnClick = (rental) => {
+        setSelectedRental(rental)
+        setReturnModalOpen(true)
+        setError('') 
+    }
+
+    const handleReturnSuccess = async () => {
+        await loadRentalHistory()
+    }
+
+    const handleReturnModalClose = () => {
+        setReturnModalOpen(false)
+        setSelectedRental(null)
+    }
 
     const getRentalRowData = (rental) => [
         <div key="film">
@@ -32,7 +51,17 @@ function RentalHistoryModal({ isOpen, onClose, customer }) {
         </span>,
         `${rental.days_rented} days`,
         rental.rating || 'N/A',
-        rental.rental_rate ? `$${rental.rental_rate}` : 'N/A'
+        rental.rental_rate ? `$${rental.rental_rate}` : 'N/A',
+        <div key="actions" className="rentalHistoryActions">
+            {rental.return_date === null && (
+                <button
+                    className="rentalHistoryReturnBtn"
+                    onClick={() => handleReturnClick(rental)}
+                >
+                    Return
+                </button>
+            )}
+        </div>
     ]
 
     useEffect(() => {
@@ -191,6 +220,14 @@ function RentalHistoryModal({ isOpen, onClose, customer }) {
                     </div>
                 </div>
             </div>
+
+            <ReturnFilmModal
+                isOpen={returnModalOpen}
+                onClose={handleReturnModalClose}
+                rental={selectedRental}
+                customer={customer}
+                onSuccess={handleReturnSuccess}
+            />
         </div>
     )
 }

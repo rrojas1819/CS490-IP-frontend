@@ -18,7 +18,6 @@ function Header({ activeTab, onTabClick }) {
           />
         ))}
       </div>
-      <div className='aboutCorner'>About</div>
     </header>
   )
 }

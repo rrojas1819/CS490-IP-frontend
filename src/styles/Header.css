@@ -42,16 +42,4 @@
   }
 }
 
-.aboutCorner{
-    margin-left: auto;         
-    font-size: 17px;
-    font-weight: 600;
-    letter-spacing: .08em;
-    color: #7FF5D1;
-    transition: color 0.3s ease;
-}
-
-.aboutCorner:hover {
-    color: #5DEDC2;
-}
   

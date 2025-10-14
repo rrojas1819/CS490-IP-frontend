@@ -178,7 +178,7 @@
 
 .rentalHistoryTableHeader {
     display: grid;
-    grid-template-columns: 2fr 1.5fr 1.5fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 2fr 1.5fr 1.5fr 1fr 1fr 1fr 1fr 1fr;
     background: linear-gradient(135deg, #1F4264 0%, #2A5B87 100%);
     border-bottom: 1px solid rgba(31, 66, 100, 0.35);
     position: sticky;
@@ -196,7 +196,7 @@
 
 .rentalHistoryTableRow {
     display: grid;
-    grid-template-columns: 2fr 1.5fr 1.5fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 2fr 1.5fr 1.5fr 1fr 1fr 1fr 1fr 1fr;
     border-bottom: 1px solid rgba(31, 66, 100, 0.35);
     transition: background-color 0.2s;
 }
@@ -275,5 +275,37 @@
     border: 1px solid rgba(31, 66, 100, 0.35);
     border-radius: 8px;
     margin: 20px 0;
+}
+
+.rentalHistoryActions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.rentalHistoryReturnBtn {
+    background: linear-gradient(135deg, #DC2626 0%, #EF4444 100%);
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 2px 4px rgba(220, 38, 38, 0.3);
+}
+
+.rentalHistoryReturnBtn:hover:not(:disabled) {
+    background: linear-gradient(135deg, #B91C1C 0%, #DC2626 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(220, 38, 38, 0.4);
+}
+
+.rentalHistoryReturnBtn:disabled {
+    background: #6B7280;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
 }
 

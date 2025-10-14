@@ -31,14 +31,17 @@ function DeleteCustomerButton({ customerId, onNotify }) {
             setError('')
             const resp = await customerAPI.deleteCustomer(effectiveId)
             console.log('Delete response', resp)
-            if (onNotify) onNotify({ type: 'success', message: 'Customer deleted successfully' })
+            
+            const successMessage = resp?.message || 'Customer deleted successfully'
+            if (onNotify) onNotify({ type: 'success', message: successMessage })
+            
+            setConfirming(false)
         } catch (e) {
             const msg = e?.message || 'Failed to delete customer'
             setError(msg)
             if (onNotify) onNotify({ type: 'error', message: msg })
         } finally {
             setIsDeleting(false)
-            setConfirming(prev => !!error)
         }
     }
 
@@ -56,8 +59,13 @@ function DeleteCustomerButton({ customerId, onNotify }) {
       {confirming && (
         <div className="miniConfirmBackdrop">
           <div className="miniConfirmModal">
-            <div className="miniConfirmTitle">Confirm Deletion</div>
-            <div className="miniConfirmText">Are you sure you want to permanently delete this customer?</div>
+            <div className="miniConfirmTitle">Confirm Customer Deletion</div>
+            <div className="miniConfirmText">
+              Are you sure you want to permanently delete this customer?
+              <br /><br />
+              <strong>Note:</strong> This will also delete all rental history for this customer. 
+              If the customer has any current rentals, the deletion will be blocked.
+            </div>
             <div className="miniConfirmActions">
               <button
                 type="button"
@@ -84,5 +92,3 @@ function DeleteCustomerButton({ customerId, onNotify }) {
 }
 
 export default DeleteCustomerButton
-
-
