@@ -4,6 +4,7 @@ import CustomerRow from './CustomerRow'
 import CustomersControls from './CustomersControls'
 import AddCustomerModal from './AddCustomerModal'
 import EditCustomerModal from './EditCustomerModal'
+import RentalHistoryModal from './RentalHistoryModal'
 import '../styles/CustomersScreen.css'
 
 function CustomersScreen() {
@@ -19,6 +20,7 @@ function CustomersScreen() {
     const [isSearchMode, setIsSearchMode] = useState(false)
     const [isAddModalOpen, setIsAddModalOpen] = useState(false)
     const [isEditModalOpen, setIsEditModalOpen] = useState(false)
+    const [isRentalHistoryModalOpen, setIsRentalHistoryModalOpen] = useState(false)
     const [selectedCustomer, setSelectedCustomer] = useState(null)
 
     const totalPages = useMemo(() => {
@@ -121,6 +123,11 @@ function CustomersScreen() {
         setIsEditModalOpen(true)
     }
 
+    const handleViewRentalHistory = (customer) => {
+        setSelectedCustomer(customer)
+        setIsRentalHistoryModalOpen(true)
+    }
+
     const handleCustomerUpdated = async () => {
         try {
             const data = await customerAPI.listCustomers()
@@ -144,7 +151,7 @@ function CustomersScreen() {
 
     const tableHeaders = [
         'Customer ID', 'Store ID', 'First Name', 'Last Name', 'Email',
-        'Address', 'City', 'Country', 'Active', 'Create Date', 'Edit'
+        'Address', 'City', 'Country', 'Active', 'Create Date', 'Actions'
     ]
 
 
@@ -194,6 +201,7 @@ function CustomersScreen() {
                             key={customer.customer_id || customer.id} 
                             customer={customer}
                             onEdit={handleEditCustomer}
+                            onViewHistory={handleViewRentalHistory}
                         />
                     ))}
                     {isLoading || isSearching ? (
@@ -240,6 +248,15 @@ function CustomersScreen() {
                 }}
                 customer={selectedCustomer}
                 onCustomerUpdated={handleCustomerUpdated}
+            />
+
+            <RentalHistoryModal
+                isOpen={isRentalHistoryModalOpen}
+                onClose={() => {
+                    setIsRentalHistoryModalOpen(false)
+                    setSelectedCustomer(null)
+                }}
+                customer={selectedCustomer}
             />
         </div>
     )

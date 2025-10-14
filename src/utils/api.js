@@ -82,7 +82,8 @@ export const customerAPI = {
     headers: {
       'Content-Type': 'application/json',
     },
-  })
+  }),
+  getRentalHistory: (customerId) => apiDefaultRequest(`/customers/rentalhistory/${customerId}`)
 };
 
 

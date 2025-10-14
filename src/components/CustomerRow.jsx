@@ -1,6 +1,6 @@
 import '../styles/CustomerRow.css'
 
-function CustomerRow({ customer, onEdit }) {
+function CustomerRow({ customer, onEdit, onViewHistory }) {
     const getCustomerCellData = (customer) => [
         customer.customer_id,
         customer.store_id,
@@ -28,6 +28,11 @@ function CustomerRow({ customer, onEdit }) {
         onEdit(customer)
     }
 
+    const handleViewHistoryClick = (e) => {
+        e.stopPropagation()
+        onViewHistory(customer)
+    }
+
     return (
         <div className="customersTableRow" role="row">
             {getCustomerCellData(customer).map((data, index) => (
@@ -42,6 +47,13 @@ function CustomerRow({ customer, onEdit }) {
                     title="Edit Customer"
                 >
                     Edit
+                </button>
+                <button 
+                    className="customerViewHistoryBtn"
+                    onClick={handleViewHistoryClick}
+                    title="View Rental History"
+                >
+                    View History
                 </button>
             </div>
         </div>

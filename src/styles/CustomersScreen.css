@@ -67,7 +67,7 @@
 
 .customersTableHeader {
   display: grid;
-  grid-template-columns: 110px 90px 130px 130px 1fr 215px 165px 165px 105px 195px 60px;
+  grid-template-columns: 110px 90px 130px 130px 1fr 215px 165px 165px 105px 195px 140px;
   position: sticky;
   top: 0;
   background: linear-gradient(135deg, #1F4264 0%, #2A5B87 100%);
