@@ -24,12 +24,12 @@ function AddCustomerModal({ isOpen, onClose, onCustomerAdded }) {
     const [phoneError, setPhoneError] = useState('')
 
     const validateEmail = (email) => {
-        const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|org|eu|edu|email|net)$/i
+        const emailPattern = /^[a-zA-Z0-9._%+-]+@(?:[a-zA-Z0-9-]+\.)+(?:com|org|eu|edu|email|net)$/i
         return emailPattern.test(email)
     }
 
     const validatePhone = (phone) => {
-        const phonePattern = /^(\+1\s?)?(\(?[0-9]{3}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{4})$/
+        const phonePattern = /^(\+\d{1,3}\s?)?(?:\([0-9]{3}\)|[0-9]{3})[\s\-]?[0-9]{3}[\s\-]?[0-9]{4}$/
         return phonePattern.test(phone)
     }
 
@@ -44,7 +44,7 @@ function AddCustomerModal({ isOpen, onClose, onCustomerAdded }) {
             }))
             
             if (phoneValue && !validatePhone(phoneValue)) {
-                setPhoneError('Phone number must be in format: 5551234567, (555) 123-4567, or +1 555 123 4567')
+                setPhoneError('Phone number must be in format: 5551234567, (555) 123-4567, or +<country code> (555) 123-4567')
             } else {
                 setPhoneError('')
             }
@@ -81,7 +81,7 @@ function AddCustomerModal({ isOpen, onClose, onCustomerAdded }) {
         }
 
         if (!validatePhone(formData.phone)) {
-            setPhoneError('Phone number must be in format: 5551234567, (555) 123-4567, or +1 555 123 4567')
+            setPhoneError('Phone number must be in format: 5551234567, (555) 123-4567, or +<country code> (555) 123-4567')
             setIsSubmitting(false)
             return
         }
@@ -299,7 +299,7 @@ function AddCustomerModal({ isOpen, onClose, onCustomerAdded }) {
                                     name="phone"
                                     value={formData.phone}
                                     onChange={handleInputChange}
-                                    placeholder="e.g., 5551234567, (555) 123-4567, or +1 555 123 4567"
+                                    placeholder="e.g., 5551234567, (555) 123-4567, or +44 (555) 123-4567"
                                     required
                                 />
                             </div>

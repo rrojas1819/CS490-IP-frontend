@@ -28,12 +28,12 @@ function EditCustomerModal({ isOpen, onClose, customer, onCustomerUpdated }) {
     const [phoneError, setPhoneError] = useState('')
 
     const validateEmail = (email) => {
-        const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|org|eu|edu|email|net)$/i
+        const emailPattern = /^[a-zA-Z0-9._%+-]+@(?:[a-zA-Z0-9-]+\.)+(?:com|org|eu|edu|email|net)$/i
         return emailPattern.test(email)
     }
 
     const validatePhone = (phone) => {
-        const phonePattern = /^(\+1\s?)?(\(?[0-9]{3}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{4})$/
+        const phonePattern = /^(\+\d{1,3}\s?)?(?:\([0-9]{3}\)|[0-9]{3})[\s\-]?[0-9]{3}[\s\-]?[0-9]{4}$/
         return phonePattern.test(phone)
     }
 
@@ -73,7 +73,7 @@ function EditCustomerModal({ isOpen, onClose, customer, onCustomerUpdated }) {
             }))
             
             if (phoneValue && !validatePhone(phoneValue)) {
-                setPhoneError('Phone number must be in format: 5551234567, (555) 123-4567, or +1 555 123 4567')
+                setPhoneError('Phone number must be in format: 5551234567, (555) 123-4567, or +<country code> (555) 123-4567')
             } else {
                 setPhoneError('')
             }
@@ -112,7 +112,7 @@ function EditCustomerModal({ isOpen, onClose, customer, onCustomerUpdated }) {
         }
 
         if (formData.phone && !validatePhone(formData.phone)) {
-            setPhoneError('Phone number must be in format: 5551234567, (555) 123-4567, or +1 555 123 4567')
+            setPhoneError('Phone number must be in format: 5551234567, (555) 123-4567, or +<country code> (555) 123-4567')
             setIsLoading(false)
             return
         }
